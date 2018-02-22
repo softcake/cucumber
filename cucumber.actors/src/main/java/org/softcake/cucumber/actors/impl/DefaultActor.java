@@ -7,7 +7,12 @@ import org.softcake.cucumber.actors.Actor;
  */
 public class DefaultActor implements Actor {
     private final String name;
-    private final String lastName;
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	private final String lastName;
 
     public DefaultActor(String name) {
         this(name,"");
