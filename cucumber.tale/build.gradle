@@ -1,0 +1,6 @@
+plugins {
+    id 'java-library'
+   
+}
+
+javaModule.name = 'org.softcake.cucumber.fairy.tale'

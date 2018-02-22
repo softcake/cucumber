@@ -1,0 +1,12 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api project(':cucumber.tale')
+    api project(':cucumber.actors')
+
+
+}
+
+javaModule.name = 'org.softcake.cucumber.fairy.tale.formula'

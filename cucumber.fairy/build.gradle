@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id 'application'
+
+}
+
+dependencies {
+    implementation project(':cucumber.tale')
+
+    runtimeOnly project(':cucumber.pigs')
+    runtimeOnly project(':cucumber.bears')
+}
+
+javaModule.name = 'org.softcake.cucumber.fairy.app'
+
+mainClassName = 'org.softcake.cucumber.fairy.app.StoryTeller'
+
+javadoc.enabled = false

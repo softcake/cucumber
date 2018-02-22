@@ -1,0 +1,48 @@
+package actors;
+
+import org.junit.jupiter.api.Test;
+import org.softcake.cucumber.actors.Actor;
+import org.softcake.cucumber.actors.Group;
+import org.softcake.cucumber.actors.Imagination;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class GroupIntegTest {
+    private static final String NOBODY = "nobodies";
+    private static final Group EMPTY = Imagination.createGroup(NOBODY);
+
+    private static final String BAND_NAME = "Beatles";
+    private static final Actor JOHN = Imagination.createActor("John Lennon");
+    private static final Actor PAUL = Imagination.createActor("Paul McCartney");
+    private static final Actor GEORGE = Imagination.createActor("George Harrison");
+    private static final Actor RINGO = Imagination.createActor("Ringo Starr");
+
+    @Test
+    public void nameMatches() {
+        assertEquals(NOBODY, EMPTY.name());
+    }
+
+    @Test
+    public void noActorsByDefault() {
+        assertTrue(EMPTY.isEmpty());
+    }
+
+    @Test
+    public void containsActors() {
+        Group beatles = Imagination.createGroup(BAND_NAME, JOHN, PAUL, GEORGE, RINGO);
+        
+        assertEquals(4, beatles.size());
+        assertTrue(beatles.contains(JOHN));
+        assertTrue(beatles.contains(PAUL));
+        assertTrue(beatles.contains(GEORGE));
+        assertTrue(beatles.contains(RINGO));
+    }
+
+    @Test
+    public void accurateToString() {
+        Group beatles = Imagination.createGroup(BAND_NAME, JOHN, PAUL, GEORGE, RINGO);
+        assertEquals("the 4 Beatles", beatles.toString());
+        assertEquals("the 0 nobodies", EMPTY.toString());
+    }
+}

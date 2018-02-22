@@ -1,0 +1,11 @@
+// tag::plugins[]
+plugins {
+    id 'java-library'
+
+}
+// end::plugins[]
+
+// tag::moduleName[]
+javaModule.name = 'org.softcake.cucumber.actors'  // <1>
+// end::moduleName[]
+

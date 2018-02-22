@@ -1,0 +1,48 @@
+apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = '0.8.0'
+        applyTo junitPlatformTest
+    }
+
+afterEvaluate {
+    jacocoTestReport {
+        group = "Coverage reports"
+        description = 'Generate Jacoco coverage reports after running tests.'
+
+        enabled = true
+
+        dependsOn test
+        executionData test
+
+        reports {
+            html.enabled = true
+            html.destination file("${buildDir}/reports/jacoco/test")
+        }
+    }
+
+
+    if (sourceSets.findByName("integrationTest")) {
+        task jacocoIntegTestReport(type: JacocoReport) {
+            group = "Coverage reports"
+            description = 'Generate Jacoco coverage reports after running integration tests.'
+
+            enabled = true
+
+            dependsOn integrationTest
+            executionData integrationTest
+            sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+            classDirectories = files(sourceSets.main.output)
+
+            reports {
+                html.enabled = true
+                html.destination file("${buildDir}/reports/jacoco/integtest/html")
+            }
+        }
+    }
+
+}
+
+
+
+

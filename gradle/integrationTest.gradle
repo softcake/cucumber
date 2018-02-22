@@ -1,0 +1,57 @@
+apply plugin: 'idea'
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integrationTest/java')
+
+            integrationTest.runtimeClasspath += integrationTest.output
+        }
+        resources.srcDir file('src/integrationTest/resources')
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+idea {
+    module {
+        testSourceDirs += file('src/integrationTest/java')
+        scopes.TEST.plus += [configurations.integrationTestRuntimeClasspath, configurations.integrationTestCompileClasspath]
+    }
+}
+
+task integrationTest(type: Test) {
+    group = JavaBasePlugin.VERIFICATION_GROUP
+
+    testClassesDirs += sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+    mustRunAfter test
+
+    reports {
+        junitXml.enabled = false
+        html.enabled = false
+    }
+
+    if (project.plugins.hasPlugin(JacocoPlugin)) {
+
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+        }
+    }
+
+    useJUnitPlatform {
+    }
+    filter {
+        //include all integration tests
+        includeTestsMatching "*IntegTest*"
+        includeTestsMatching "*IntegrationTest*"
+        failOnNoMatchingTests true
+    }
+}
+
+check.dependsOn(integrationTest)
