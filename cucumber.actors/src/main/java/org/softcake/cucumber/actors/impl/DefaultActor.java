@@ -6,7 +6,7 @@ import org.softcake.cucumber.actors.Actor;
  * Default implementation of {@link Actor}
  */
 public class DefaultActor implements Actor {
-    private final String name;
+    private String name;
 
 	/**
 	 * @return
@@ -36,4 +36,8 @@ public class DefaultActor implements Actor {
     public String toString() {
         return name();
     }
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
