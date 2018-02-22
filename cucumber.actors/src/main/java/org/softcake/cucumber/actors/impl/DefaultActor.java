@@ -1,5 +1,6 @@
 package org.softcake.cucumber.actors.impl;
 
+import com.google.common.base.Preconditions;
 import org.softcake.cucumber.actors.Actor;
 
 /**
@@ -18,12 +19,14 @@ public class DefaultActor implements Actor {
 	private final String lastName;
 
     public DefaultActor(String name) {
+
         this(name,"");
 
     }
 
     public DefaultActor(String name, String lastName) {
-        this.name = name;
+	    Preconditions.checkNotNull(name);
+    	this.name = name;
         this.lastName = lastName;
     }
 
