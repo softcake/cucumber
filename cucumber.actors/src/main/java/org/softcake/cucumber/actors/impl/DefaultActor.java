@@ -11,7 +11,7 @@ public class DefaultActor implements Actor {
 
     public DefaultActor(String name) {
         this(name,"");
-       
+
     }
 
     public DefaultActor(String name, String lastName) {
