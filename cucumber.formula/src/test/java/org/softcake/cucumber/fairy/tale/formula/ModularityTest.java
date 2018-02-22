@@ -1,7 +1,6 @@
 package org.softcake.cucumber.fairy.tale.formula;
 
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.softcake.cucumber.actors.Actor;
 import org.softcake.cucumber.actors.Imagination;
@@ -21,7 +20,7 @@ public class ModularityTest {
     }
 
     @Test
-    @Disabled("Java 9 modularity even stops reflection.")
+   // @Disabled("Java 9 modularity even stops reflection.")
     public void canDynamicallyReachDefaultActor() throws Exception {
         Class clazz = ModularityTest
             .class.getClassLoader()
