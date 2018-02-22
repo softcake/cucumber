@@ -19,6 +19,5 @@ gradle-app.setting
 
 # Misc
 *.log
-/gradlew
-/gradlew.bat
-/gradle/wrapper/gradle-wrapper.jar
+
+

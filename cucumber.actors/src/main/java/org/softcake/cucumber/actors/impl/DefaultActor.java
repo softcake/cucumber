@@ -8,8 +8,20 @@ import org.softcake.cucumber.actors.Actor;
 public class DefaultActor implements Actor {
     private final String name;
 
+	public String getLastName() {
+		return lastName;
+	}
+
+	private final String lastName;
+
     public DefaultActor(String name) {
+        this(name,"");
+
+    }
+
+    public DefaultActor(String name, String lastName) {
         this.name = name;
+        this.lastName = lastName;
     }
 
     @Override
