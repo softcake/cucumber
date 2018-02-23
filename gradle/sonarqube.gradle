@@ -16,7 +16,7 @@
 
 //noinspection GroovyAssignabilityCheck
 
-
+println(project.sonarHostUrl)
 sonarqube.properties {
     property "sonar.host.url", project.sonarHostUrl
     property "sonar.login", project.sonarLogin
@@ -50,8 +50,9 @@ subprojects {project ->
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
         property "sonar.sources", "src/main/java"
         property "sonar.java.binaries", "${project.buildDir}/classes"
-        property "sonar.junit.reportsPath", "${project.buildDir}/test-results/junit-platform"
+        property "sonar.junit.reportsPaths", "${project.buildDir}/test-results/junit-platform"
         if (project in rootProject.integTestModules) {
+            println("test_________________" + project.name)
             property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integrationTest.exec"
             if (sourceSets.integrationTest.allSource.getSrcDirs() != null) {
                 properties["sonar.tests"] += sourceSets.integrationTest.allJava.getSrcDirs()
@@ -61,5 +62,7 @@ subprojects {project ->
     }
 }
 
-
+sonarqube{
+    println("test_________________" + project.sonarHostUrl)
+}
 

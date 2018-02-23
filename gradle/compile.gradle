@@ -33,8 +33,30 @@ allprojects { subProject ->
     if (subProject.plugins.hasPlugin(JavaPlugin)) {
 
 
+    test {
+        useJUnitPlatform {
+        }
+
+    }
+
+    junitPlatformTest {
+
+        afterEvaluate {
+            jacoco {
+                append = false
+                destinationFile = file("$buildDir/jacoco/test.exec")
+            }
+        }
+
+    }
+
+
+
         tasks.withType(Test) { task ->
             task.testLogging.exceptionFormat = 'full'
+
+
+            tasks.jacoco.destinationFile = file("$buildDir/jacoco/test.exec")
         }
 // Declare "javacRelease" as a global property to make it overridable by
 

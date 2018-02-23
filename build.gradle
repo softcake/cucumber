@@ -6,14 +6,14 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
+        classpath "org.junit.platform:junit-platform-gradle-plugin:1.1.0"
         classpath "gradle.plugin.com.zyxist:chainsaw:0.1.3"
         classpath "com.netflix.nebula:nebula-project-plugin:3.4.1"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
-        classpath 'ru.vyarus:gradle-pom-plugin:1.2.0'
-        classpath 'net.nemerosa:versioning:2.0.0'
-        classpath 'ru.vyarus:gradle-github-info-plugin:1.1.0'
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
+        classpath "ru.vyarus:gradle-pom-plugin:1.2.0"
+        classpath "net.nemerosa:versioning:2.0.0"
+        classpath "ru.vyarus:gradle-github-info-plugin:1.1.0"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE"
         classpath "gradle.plugin.de.gliderpilot.gradle.semantic-release:gradle-semantic-release-plugin:1.4.0"
     }
 }
@@ -39,24 +39,27 @@ allprojects {
 
 }
 
-ext.junit4Version = '4.12'
-ext.junitVintageVersion = '5.1.0'
-ext.junitPlatformVersion = '1.1.0'
-ext.junitJupiterVersion = '5.1.0'
-ext.log4jVersion = '2.9.0'
+ext {
+    junit4Version = "4.12"
+    junitVintageVersion = "5.1.0"
+    junitPlatformVersion = "1.1.0"
+    junitJupiterVersion = "5.1.0"
+    log4jVersion = "2.9.0"
+}
+
 ext {
 
     publishedModules = getPublishedProjects()
 
-    integTestModules = publishedModules.findAll{
-        (it.name in ['cucumber.actors'])
+    integTestModules = publishedModules.findAll {
+        (it.name in ["cucumber.actors"])
     }
 
     benchmarkModules = publishedModules.findAll {
         (it.name in [])
     }
 
-    sonarQubeModules = publishedModules.toArray()
+    sonarQubeModules = publishedModules
     generateManifest = true
     publishArtifacts = true
     checkCodeQuality = false
@@ -64,21 +67,18 @@ ext {
 }
 
 
-apply plugin: 'idea'
-apply plugin: 'org.sonarqube'
-apply plugin: 'net.nemerosa.versioning'
+apply plugin: "idea"
+apply plugin: "org.sonarqube"
+apply plugin: "net.nemerosa.versioning"
 apply plugin: "de.gliderpilot.semantic-release"
-apply from: file('gradle/credentials.gradle')
-apply from: file('gradle/compile.gradle')
+apply from: file("gradle/credentials.gradle")
+apply from: file("gradle/compile.gradle")
 apply from: file("$rootProject.rootDir/gradle/properties.gradle")
+apply from: file("$rootProject.rootDir/gradle/sonarqube.gradle")
 
-//
-//jar {
-//    baseName = 'junit5-gradle-consumer'
-//    version = '1.0.0-SNAPSHOT'
-//}
 allprojects {
     apply plugin: "io.spring.dependency-management"
+
     dependencyManagement {
         dependencies {
             dependency "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
@@ -88,24 +88,38 @@ allprojects {
             dependency "com.google.guava:guava:24.0-jre"
         }
     }
+
+
+
+
 }
 
 
-subprojects {subProject ->
-
-
+subprojects { subProject ->
 
     if (subProject in publishedModules) {
-        apply plugin: 'com.zyxist.chainsaw'
-        apply plugin: 'org.junit.platform.gradle.plugin'
+        apply plugin: "com.zyxist.chainsaw"
+        apply plugin: "org.junit.platform.gradle.plugin"
         apply from: file("$rootProject.rootDir/gradle/publishing.gradle")
 
+        // common dependencies
+        dependencies {
+            // JUnit Jupiter API and TestEngine implementation
+            testImplementation("org.junit.jupiter:junit-jupiter-api")
+            testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+            // To use Log4J's LogManager
+            testRuntimeOnly("org.apache.logging.log4j:log4j-core")
+            testRuntimeOnly("org.apache.logging.log4j:log4j-jul")
+
+            implementation "com.google.guava:guava"
+        }
 
 
     }
+
     if (subProject in sonarQubeModules) {
         apply from: file("$rootProject.rootDir/gradle/coverage.gradle")
-        apply from: file("$rootProject.rootDir/gradle/sonarqube.gradle")
 
     }
 
@@ -113,48 +127,10 @@ subprojects {subProject ->
         apply from: file("$rootProject.rootDir/gradle/integrationTest.gradle")
     }
 
-
-
-
-
-
-
-
-
-
     repositories {
         jcenter()
         mavenLocal()
         mavenCentral()
-    }
-
-    dependencies {
-        // JUnit Jupiter API and TestEngine implementation
-        testImplementation("org.junit.jupiter:junit-jupiter-api")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-
-        // If you also want to support JUnit 3 and JUnit 4 tests
-        // testRuntimeOnly("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
-
-        // To use Log4J's LogManager
-        testRuntimeOnly("org.apache.logging.log4j:log4j-core")
-        testRuntimeOnly("org.apache.logging.log4j:log4j-jul")
-
-        implementation 'com.google.guava:guava'
-    }
-
-    test {
-        useJUnitPlatform {
-        }
-    }
-
-    junitPlatformTest {
-        if (project.plugins.hasPlugin(JacocoPlugin)) {
-            jacoco {
-                append = false
-                destinationFile = file("$buildDir/jacoco/test.exec")
-            }
-        }
     }
 
 
@@ -165,7 +141,7 @@ private List<Project> getPublishedProjects() {
     subprojects.each { project ->
         if (project.name.indexOf(rootProject.name) != -1) {
             publishedModules.add(project)
-            println("Find published module '$project.name' in root project '$rootProject.name'")
+            println("Find published module ${project.name} in root project ${rootProject.name}")
         }
     }
     return publishedModules
@@ -174,17 +150,34 @@ private List<Project> getPublishedProjects() {
 semanticRelease {
     repo {
         ghToken = project.ext.ghToken
-//        releaseAsset aggregateJar, contentType: 'application/zip'
-//        releaseAsset aggregateSourcesJar, label: 'the sources of the project', contentType:
-//                'application/zip'
-//        releaseAsset aggregateJavadocJar, label: 'the javadoc of the project', contentType:
-//                'application/zip'
+//        releaseAsset aggregateJar, contentType: "application/zip"
+//        releaseAsset aggregateSourcesJar, label: "the sources of the project", contentType:
+//                "application/zip"
+//        releaseAsset aggregateJavadocJar, label: "the javadoc of the project", contentType:
+//                "application/zip"
     }
 }
 
 
+allprojects { subProject ->
+    if (subProject.plugins.hasPlugin(JavaPlugin)) {
+
+        test {
+            useJUnitPlatform {
+            }
+
+        }
+
+        junitPlatformTest {
 
 
+                jacoco {
+                    append = false
+                    destinationFile = file("$buildDir/jacoco/test.exec")
+                }
 
 
+        }
 
+    }
+}
