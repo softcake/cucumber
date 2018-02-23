@@ -132,7 +132,31 @@ subprojects { subProject ->
         mavenLocal()
         mavenCentral()
     }
+    String branch = versioning.info.branch
 
+    final BRANCH_NAMES_PATTERN = /^(?:release[-\/])?[0-9]+(\.[0-9]+)?\.x$|^(?:feature[-\/]|hotfix[-\/]|develop|master)?$/
+
+    afterEvaluate {
+        if (branch.matches(BRANCH_NAMES_PATTERN)){
+
+            if (!project.isSnapshot && project.hasTravisSecEnv) {
+
+//                publish.finalizedBy getTasksByName("bintrayUpload", true)
+//                publish.finalizedBy getTasksByName("artifactoryPublish", true)
+//                publish.finalizedBy rootProject.getTasksByName("gitPublishPush", true)
+                publish.finalizedBy rootProject.getTasksByName("sonarqube", true)
+
+            } else if (!project.isPullRequest && project.hasTravisSecEnv) {
+
+//                publish.finalizedBy getTasksByName("artifactoryPublish", true)
+                publish.finalizedBy rootProject.getTasksByName("sonarqube", true)
+
+            } else if (project.isPullRequest && project.hasTravisSecEnv) {
+
+                build.finalizedBy rootProject.getTasksByName("sonarqube", true)
+            }
+        }
+    }
 
 }
 
