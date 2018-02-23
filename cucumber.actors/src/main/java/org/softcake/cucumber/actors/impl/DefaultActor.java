@@ -8,7 +8,7 @@ import org.softcake.cucumber.actors.Actor;
  */
 public class DefaultActor implements Actor {
     private String name;
-
+private String sex;
 	/**
 	 * @return
 	 */
@@ -43,4 +43,12 @@ public class DefaultActor implements Actor {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 }
