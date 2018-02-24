@@ -16,8 +16,7 @@ branches:
   except:
   - "/^v\\d+\\.\\d+\\.\\d+$/"
 before_install:
-- export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-- echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
+- export BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
 - git fetch --unshallow || true
 - git config user.email "rene.neubert@softcake.org"
 - git config user.name "Travis-CI"
