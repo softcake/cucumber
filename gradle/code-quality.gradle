@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-plugins {
-    id 'java-library'
- 
+def configDir = new File("${rootDir}", 'config')
+def qualityGroup = "Code Quality"
+
+apply plugin: 'checkstyle'
+def checkstyleConfigDir = "$configDir/checkstyle"
+
+checkstyle {
+    ignoreFailures = project.ignoreFailures
+    configFile = new File(checkstyleConfigDir, "softcake_checks.xml")
+    configProperties = [ "basedir" :new File(checkstyleConfigDir, "softcake_suppressions.xml")]
+    toolVersion = '8.8'
 }
 
-dependencies {
-    api project(':cucumber.tale')
-
-    implementation project(':cucumber.formula')
-    implementation project(':cucumber.actors')
+tasks.withType(Checkstyle) {
+    enabled = checkCodeQuality
+    group = qualityGroup
+    reports {
+        xml.enabled = false
+        html.enabled = !project.isCi
+    }
 }
-
-javaModule.name = 'org.softcake.cucumber.fairy.tale.pigs'

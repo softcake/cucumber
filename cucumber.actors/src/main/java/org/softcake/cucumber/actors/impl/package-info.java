@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2018 softcake.org.
  *
@@ -14,16 +15,4 @@
  * limitations under the License.
  */
 
-plugins {
-    id 'java-library'
- 
-}
-
-dependencies {
-    api project(':cucumber.tale')
-
-    implementation project(':cucumber.formula')
-    implementation project(':cucumber.actors')
-}
-
-javaModule.name = 'org.softcake.cucumber.fairy.tale.pigs'
+package org.softcake.cucumber.actors.impl;

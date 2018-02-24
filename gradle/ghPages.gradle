@@ -14,16 +14,26 @@
  * limitations under the License.
  */
 
-plugins {
-    id 'java-library'
- 
+apply plugin: "org.ajoberstar.github-pages"
+
+githubPages {
+    repoUri = github.site
+    credentials {
+        username = project.ghUser
+        password = project.ghPass
+    }
+    def docDir = project(':documentation').buildDir
+    pages {
+        from "$docDir/asciidoc/html5"
+    }
+
 }
 
-dependencies {
-    api project(':cucumber.tale')
-
-    implementation project(':cucumber.formula')
-    implementation project(':cucumber.actors')
+task cleanGhPages(type: Delete) {
+    delete "$buildDir/ghpages"
+    followSymlinks = true
+    mustRunAfter "publishGhPages"
 }
 
-javaModule.name = 'org.softcake.cucumber.fairy.tale.pigs'
+prepareGhPages.dependsOn ":documentation:asciidoctor"
+
