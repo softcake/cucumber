@@ -27,7 +27,7 @@ final BRANCH_NAMES_PATTERN = /^(?:release[-\/])?[0-9]+(\.[0-9]+)?\.x$|^(?:featur
 ext {
     isSnapshot = version.toString().endsWith("-SNAPSHOT")
     isTravis = System.getenv("TRAVIS") != null
-    isCi = false // TODO isTravis
+    isCi = isTravis
     isPullRequest = isTravis ? System.getenv('TRAVIS_PULL_REQUEST') != "false" : false
     hasTravisSecEnv = System.getenv('TRAVIS_SECURE_ENV_VARS') == "true"
     jvm = Jvm.current()
