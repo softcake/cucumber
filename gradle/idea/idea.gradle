@@ -183,7 +183,7 @@ void createCheckStyle() {
                         "<option name=\"configuration\">\n" +
                         "<map>\n" +
                         "<entry key=\"active-configuration\" value=\"PROJECT_RELATIVE:\$PRJ_DIR\$/config/checkstyle/softcake_checks.xml:The default softcake rules\" />\n" +
-                        "<entry key=\"checkstyle-version\" value=\"7.8.2\" />\n" +
+                        "<entry key=\"checkstyle-version\" value=\"8.8\" />\n" +
                         "<entry key=\"location-0\" value=\"CLASSPATH:/sun_checks.xml:The default Checkstyle rules\" />\n" +
                         "<entry key=\"location-1\" value=\"PROJECT_RELATIVE:\$PRJ_DIR\$/config/checkstyle/softcake_checks.xml:The default softcake rules\" />\n" +
                         "<entry key=\"property-1.basedir\" value=\"softcake_suppressions.xml\" />\n" +
