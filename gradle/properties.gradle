@@ -20,7 +20,7 @@ import org.gradle.internal.jvm.Jvm
 import java.text.SimpleDateFormat
 
 status = version.toString().endsWith("-SNAPSHOT") ? 'snapshot' : 'release'
-println(status)
+
 Date buildTimeAndDate = new Date()
 final BRANCH_NAMES_PATTERN = /^(?:release[-\/])?[0-9]+(\.[0-9]+)?\.x$|^(?:feature[-\/]|hotfix[-\/]|develop|master)?$/
 
@@ -36,9 +36,9 @@ ext {
     buildDate = new SimpleDateFormat('yyyy-MM-dd').format(buildTimeAndDate)
     buildTime = new SimpleDateFormat('HH:mm:ss').format(buildTimeAndDate)
     buildYear = new SimpleDateFormat('yyyy').format(buildTimeAndDate)
-    //TODO
     buildRevision = versioning.info.commit
     builtByValue = project.hasProperty("builtBy") ? project.builtBy : project.defaultBuiltBy
+    generateManifest = false
     isValidBranch = versioning.info.branch.matches(BRANCH_NAMES_PATTERN)
 }
 

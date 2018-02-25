@@ -31,8 +31,6 @@ sonarqube.properties {
     property "sonar.branch", versioning.info.branch
     property "sonar.scm.disabled", Boolean.TRUE
 
-    //property "sonar.jacoco.reportMissing.force.zero", Boolean.TRUE
-
     if (project.isPullRequest && project.hasTravisSecEnv) {
         property "sonar.analysis.mode", "preview"
         property "sonar.github.pullRequest", System.getenv('TRAVIS_PULL_REQUEST')

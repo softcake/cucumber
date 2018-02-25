@@ -21,20 +21,19 @@ import static groovyx.net.http.ContentType.JSON
 buildscript {
     repositories {
         mavenCentral()
-        maven{
-            url "http://repository.codehaus.org"
-        }
+//        maven {
+//            url "http://repository.codehaus.org"
+//        }
     }
     dependencies {
-        classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.5.2'
+        classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
     }
 }
-//@Grab('org.codehaus.groovy.modules.http-builder:http-builder:0.7')
 
 apply plugin: 'com.jfrog.bintray'
 
 bintrayUpload {
-    doFirst{
+    doFirst {
         createBintrayRepository(rootProject.name, project)
     }
     onlyIf {
@@ -42,6 +41,7 @@ bintrayUpload {
     }
 }
 
+//noinspection GroovyAssignabilityCheck
 bintray {
 
     user = project.bintrayUser
@@ -60,7 +60,7 @@ bintray {
         publicDownloadNumbers = true
         licenses = ['Apache-2.0']
 
-        //noinspection GroovyAssignabilityCheck
+
         version {
 
             released = new Date()
@@ -88,10 +88,9 @@ bintray {
 /**
  * Create a Bintray repository.
  *
- * @param reponame
  */
 def createBintrayRepository(String reponame, Project project) {
-println("Should not be here!")
+
     def response
     try {
         String user = project.bintrayUser
@@ -99,7 +98,7 @@ println("Should not be here!")
 
         RESTClient rest = new RESTClient("https://api.bintray.com/repos/")
         rest.auth.basic(user, pass)
-        response = rest.post(path: "softcake/${reponame}",
+        response = rest.post(path: "$github.user/${reponame}",
                 contentType: JSON,
                 body: [name             : reponame,
                        type             : "maven",

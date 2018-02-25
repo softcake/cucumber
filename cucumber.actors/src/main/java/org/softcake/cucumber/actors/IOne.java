@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-// tag::plugins[]
-plugins {
-    id 'java-library'
+package org.softcake.cucumber.actors;
 
-}
-// end::plugins[]
+/**
+ * @author René Neubert.
+ */
+public interface IOne {
 
-// tag::moduleName[]
-javaModule.name = 'org.softcake.cucumber.actors'  // <1>
-// end::moduleName[]
-
-dependencies {
-    // JUnit Jupiter API and TestEngine implementation
-    jmh ("com.google.guava:guava")
+    /**
+     * @return a string.
+     */
+    String getName();
 }

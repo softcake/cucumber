@@ -14,18 +14,37 @@
  * limitations under the License.
  */
 
-// tag::plugins[]
-plugins {
-    id 'java-library'
+package org.softcake.cucumber.actors;
 
-}
-// end::plugins[]
+/**
+ * @author Rene Neubert.
+ */
+public class One implements IOne {
 
-// tag::moduleName[]
-javaModule.name = 'org.softcake.cucumber.actors'  // <1>
-// end::moduleName[]
+    private String name;
 
-dependencies {
-    // JUnit Jupiter API and TestEngine implementation
-    jmh ("com.google.guava:guava")
+    /**
+     * the constructor.
+     */
+    public One() {
+
+        this("One");
+    }
+
+    /**
+     * @param name the custom name.
+     */
+    public One(final String name) {
+
+        this.name = name;
+    }
+
+    /**
+     * @return String.
+     */
+    @Override
+    public final String getName() {
+
+        return name;
+    }
 }

@@ -23,23 +23,42 @@ if (!isCi) {
     idea {
         module {
             excludeDirs += [file(".gradle"), file('.idea')]
+            iml {
+                //if you like to keep *.iml in a secret folder
+                generateTo = file("${rootDir}/.idea")
 
+            }
         }
         project {
 
-            jdkName "1.8"
+            jdkName rootProject.javacRelease
             languageLevel "1.8"
             vcs = "Git"
 
-            createCopyright()
-            createCodeStyle()
-           createCheckStyle()
-            setupGradle()
-            setupSonarLint("develop")
+           setupIDEA()
         }
     }
 
 }
+
+void setupIDEA(){
+    def ideaFolderPath = "${rootDir}/.idea"
+    def ideaFolder = new File(ideaFolderPath)
+
+    if (!ideaFolder.exists()) {
+        return
+    }
+
+    createCopyright()
+    createCodeStyle()
+    createCheckStyle()
+    setupGitFlow()
+    setupGradle()
+    setupSonarLint("develop")
+
+}
+
+
 
 void createCopyright() {
     def copyrightFolderPath = "${rootDir}/.idea/copyright"
@@ -115,61 +134,36 @@ void createCopyright() {
 
 
 void createCodeStyle() {
-    def codeStyleFolderPath = "${rootDir}/.idea/codeStyles"
-    def codeStyleFolder = new File(codeStyleFolderPath)
+    def codeStyleTargetPath = "${rootDir}/.idea/codeStyles"
+    def codeStyleFolder = new File(codeStyleTargetPath)
 
     if (!codeStyleFolder.exists()) {
         codeStyleFolder.mkdirs()
     }
-
     def codeStyleSourcePath = "${rootDir}/gradle/idea"
-    java.nio.file.Path codeStyleSourceFile = new File(codeStyleSourcePath + "/Project.xml").toPath()
-    java.nio.file.Path codeStyleTargetFile = new File(codeStyleFolderPath + "/Project.xml").toPath()
-    Files.copy(codeStyleSourceFile, codeStyleTargetFile, StandardCopyOption.REPLACE_EXISTING)
+    copyFile(codeStyleSourcePath + "/Project.xml", codeStyleTargetPath + "/Project.xml")
+    copyFile(codeStyleSourcePath + "/codeStyleConfig.xml", codeStyleTargetPath + "/codeStyleConfig.xml")
 
-    java.nio.file.Path codeStyleConfigSourceFile = new File(codeStyleSourcePath + "/codeStyleConfig.xml").toPath()
-    java.nio.file.Path codeStyleConfigTargetFile = new File(codeStyleFolderPath + "/codeStyleConfig.xml").toPath()
-    Files.copy(codeStyleConfigSourceFile, codeStyleConfigTargetFile, StandardCopyOption.REPLACE_EXISTING)
-
-/*
-
-
-
-
-    def codeStyleFile = new File(codeStyleFolderPath + "/codeStyleConfig.xml")
-
-    if (!codeStyleFile.exists()) {
-        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<project version=\"4\">\n" +
-                "<component name=\"ProjectCodeStyleSettingsManager\">\n" +
-                "</component>\n" +
-                "</project>"
-
-        printXml(new XmlParser().parseText(xml), codeStyleFile)
-    }
-
-    def node = new XmlParser().parse(codeStyleFile)
-
-    def codeStyleSettingsManager = node.component.find {
-        it.@name == "ProjectCodeStyleSettingsManager"
-    }
-
-    def newCodeStyle = new XmlParser().parse(file("gradle/idea/codeStyle.xml"))
-
-    if (codeStyleSettingsManager) {
-        codeStyleSettingsManager.replaceNode(newCodeStyle)
-    } else {
-        node.append(newCodeStyle)
-    }
-    printXml(node, codeStyleFile)*/
 }
 
-void createCheckStyle() {
-    def checkStyleFolderPath = "${rootDir}/.idea"
+void copyFile(String sourcePath, String targetPath) {
+    java.nio.file.Path source = new File(sourcePath).toPath()
+    java.nio.file.Path target = new File(targetPath).toPath()
+    Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING)
 
-    def checkStyleFile = new File(checkStyleFolderPath + "/checkstyle-idea.xml")
+}
+
+
+void createCheckStyle() {
+    def checkStyleTargetPath = "${rootDir}/.idea"
+
+    def checkStyleFile = new File(checkStyleTargetPath + "/checkstyle-idea.xml")
     if (!checkStyleFile.exists()) {
+
+        def checkStyleSourcePath = "${rootDir}/gradle/idea"
+        copyFile(checkStyleSourcePath + "/checkstyle-idea.xml", checkStyleTargetPath + "/checkstyle-idea.xml")
         return
+
     }
     Node node = new XmlParser().parse(checkStyleFile)
 
@@ -236,6 +230,45 @@ void findAndSet(String name, Node node, Object value) {
     }
 }
 
+void setupGitFlow() {
+    def gradleFolderPath = "${rootDir}/.idea"
+
+    def gradleFile = new File(gradleFolderPath + "/workspace.xml")
+    if (gradleFile.exists()) {
+        Node node = new XmlParser().parse(gradleFile)
+        findAndSetGitFlow("Gitflow.featureFetchOrigin", node, true)
+        findAndSetGitFlow("Gitflow.featureKeepRemote", node, false)
+        findAndSetGitFlow("Gitflow.featureKeepLocal", node, false)
+        findAndSetGitFlow("Gitflow.featureNoFastForward", node, true)
+        findAndSetGitFlow("Gitflow.releaseFetchOrigin", node, true)
+        findAndSetGitFlow("Gitflow.pushOnFinishRelease", node, true)
+        findAndSetGitFlow("Gitflow.dontTagRelease", node, true)
+        findAndSetGitFlow("Gitflow.useCustomTagCommitMessage", node, false)
+        findAndSetGitFlow("Gitflow.hotfixFetchOrigin", node, true)
+        findAndSetGitFlow("Gitflow.pushOnFinishHotfix", node, true)
+        findAndSetGitFlow("Gitflow.dontTagHotfix", node, true)
+
+        printXml(node, gradleFile)
+    }
+}
+
+void findAndSetGitFlow(String name, Node node, Object value) {
+
+    Node propertiesComponent = node.component.find {
+        if (it.@name == "PropertiesComponent")
+            return it
+    }
+    if (propertiesComponent == null) {
+        return
+    }
+
+    Node property = propertiesComponent.property.find {
+        if (it.@name == name) {
+            it.@value = value
+            return it
+        }
+    }
+}
 
 void printXml(Node node, File file) {
     def printer = new XmlNodePrinter(new PrintWriter(new FileWriter(file)))
@@ -244,17 +277,14 @@ void printXml(Node node, File file) {
 }
 
 void setupSonarLint(String branch) {
-    def sonarFolderPath = "${rootDir}/.idea"
+    def sonarTargetPath = "${rootDir}/.idea"
 
-    def sonarFile = new File(sonarFolderPath + "/sonarlint.xml")
+    def sonarFile = new File(sonarTargetPath + "/sonarlint.xml")
     if (!sonarFile.exists()) {
 
-
-        def codeStyleSourcePath = "${rootDir}/gradle/idea"
-        java.nio.file.Path codeStyleSourceFile = new File(codeStyleSourcePath + "/sonarlint.xml").toPath()
-        java.nio.file.Path codeStyleTargetFile = new File(sonarFolderPath + "/sonarlint.xml").toPath()
-        Files.copy(codeStyleSourceFile, codeStyleTargetFile, StandardCopyOption.REPLACE_EXISTING)
-
+        def sonarSourcePath = "${rootDir}/gradle/idea"
+        copyFile(sonarSourcePath + "/sonarlint.xml", sonarTargetPath + "/sonarlint.xml")
+        return
 
     }
     Node node = new XmlParser().parse(sonarFile)
@@ -266,10 +296,10 @@ void setupSonarLint(String branch) {
     if (sonarConfiguration) {
         String xml =
                 "<component name=\"SonarLintProjectSettings\">\n" +
-                "<option name=\"bindingEnabled\" value=\"true\" />\n" +
-                "<option name=\"projectKey\" value=\"${rootProject.group}:${branch}\" />\n" +
-                "<option name=\"serverId\" value=\"sonar.aldeso.com\" />\n" +
-                "</component>"
+                        "<option name=\"bindingEnabled\" value=\"true\" />\n" +
+                        "<option name=\"projectKey\" value=\"${rootProject.group}:${branch}\" />\n" +
+                        "<option name=\"serverId\" value=\"sonar.aldeso.com\" />\n" +
+                        "</component>"
 
 
         sonarConfiguration.replaceNode(new XmlParser().parseText(xml))

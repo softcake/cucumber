@@ -59,7 +59,10 @@ javadoc {
     }
     options.memberLevel = JavadocMemberLevel.PROTECTED
     options.author = true
-    options.addStringOption('Xdoclint:html,syntax,reference', '-quiet')
+    options.header = project.name
+    options.addStringOption('Xdoclint:html,syntax', '-quiet')
+    options.addMultilineStringsOption('tag').setValue(['apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:', 'implNote:a:Implementation Note:'])
+    options.encoding = 'UTF-8'
     options.links('http://docs.oracle.com/javase/8/docs/api/',
             'http://typesafehub.github.com/config/latest/api/',
             'http://google.github.io/guava/releases/21.0/api/docs/')
@@ -93,11 +96,11 @@ tasks.withType(Jar) {
         into 'META-INF'
     }
 }
-//
-//compileJava.doLast {
-//    rootProject.generateManifest = true
-//}
-//
+
+compileJava.doLast {
+    rootProject.generateManifest = true
+}
+
 afterEvaluate {
     jar {
         onlyIf {

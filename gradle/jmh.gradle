@@ -30,8 +30,12 @@ if (project in benchmarkModules) {
     }
 
     tasks.jmh {
+        doFirst {
+            configurations.jmh.dependencies.clear()
+        }
         group = 'Benchmarks'
         description = 'Executes a Java microbenchmark'
+
     }
 
      jmhJar {
@@ -39,7 +43,7 @@ if (project in benchmarkModules) {
      }
 
     jmh {
-        jmhVersion = tool_versions.jmh
+        jmhVersion = '1.20'
 
         // Benchmark mode: Throughput/thrpt, AverageTime/avgt, SampleTime/sample, SingleShotTime/ss,
         // All/all

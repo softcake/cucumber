@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-apply plugin: "base"
+import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
 
 task cleanRoot(type: Delete) {
     delete "$buildDir"
@@ -24,43 +23,13 @@ task cleanRoot(type: Delete) {
 
 task wrapper(type: Wrapper) {
     description = 'Generates gradlew[.bat] scripts'
-    //distributionType = DistributionType.BIN
+    distributionType = DistributionType.BIN
     gradleVersion = '4.6-rc-2'
-}
 
+}
 
 allprojects { subProject ->
     if (subProject.plugins.hasPlugin(JavaPlugin)) {
-
-
-    test {
-        useJUnitPlatform {
-        }
-
-    }
-
-    junitPlatformTest {
-
-        afterEvaluate {
-            jacoco {
-                append = false
-                destinationFile = file("$buildDir/jacoco/test.exec")
-            }
-        }
-
-    }
-
-
-
-        tasks.withType(Test) { task ->
-            task.testLogging.exceptionFormat = 'full'
-
-
-            tasks.jacoco.destinationFile = file("$buildDir/jacoco/test.exec")
-        }
-// Declare "javacRelease" as a global property to make it overridable by
-
-        // a sub-project.
 
 
         ext.javacRelease = rootProject.javacRelease
@@ -69,13 +38,18 @@ allprojects { subProject ->
         subProject.afterEvaluate { evaluatedProject ->
             evaluatedProject.tasks.withType(JavaCompile) {
 
-                sourceCompatibility = javacRelease // needed by clover
-                targetCompatibility = javacRelease // needed by clover/asm
+                sourceCompatibility = javacRelease
+                targetCompatibility = javacRelease
 
                 options.compilerArgs += ['--release', javacRelease]
                 options.encoding = 'UTF-8'
 
             }
+
+            evaluatedProject.withType(Test) { task ->
+                task.testLogging.exceptionFormat = 'full'
+            }
+
         }
         // See: https://docs.oracle.com/javase/9/tools/javac.htm#JSWOR627
 

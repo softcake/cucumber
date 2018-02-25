@@ -34,14 +34,15 @@ buildscript {
         classpath "gradle.plugin.de.gliderpilot.gradle.semantic-release:gradle-semantic-release-plugin:1.4.0"
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.6.2"
-//        classpath "me.champeau.gradle:jmh-gradle-plugin:0.3.1"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.5"
 //        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.6.0"
-//        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.2"
+       classpath "com.github.jengelman.gradle.plugins:shadow:2.0.2"
 //        classpath "de.schauderhaft.degraph:degraph-check:0.1.4"
 //        classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.7"
 //        classpath "org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.16"
 //        classpath "com.gradle:build-scan-plugin:1.11"
         classpath "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
+
     }
 }
 
@@ -83,11 +84,11 @@ ext {
     }
 
     benchmarkModules = publishedModules.findAll {
-        (it.name in [])
+        (it.name in ["cucumber.actors"])
     }
 
     sonarQubeModules = publishedModules
-    generateManifest = true
+
     publishArtifacts = true
     checkCodeQuality = true
     ignoreFailures = true
@@ -152,6 +153,9 @@ subprojects { subProject ->
     if (subProject in integTestModules) {
         apply from: file("$rootDir/gradle/integrationTest.gradle")
     }
+    if (project in benchmarkModules) {
+        apply from: "$rootDir/gradle/jmh.gradle"
+    }
 
     repositories {
         jcenter()
@@ -201,6 +205,72 @@ allprojects { subProject ->
             }
 
         }
+
+    }
+}
+
+
+configure(rootProject) {
+    task aggregateJavadocs(type: Javadoc) {
+
+
+        group = "Documentation"
+        description = "Generates aggregated Javadocs"
+        title = "JUnit ${version} API"
+
+        setDependsOn subprojects.collect { it.tasks.getByName("jar") }
+
+        // Use external javadoc.options to inject unsupported options, like:
+        //   options.addStringOption('-html5')
+        // options.optionFiles(rootProject.file("src/javadoc/javadoc.options"))
+
+        options.memberLevel = JavadocMemberLevel.PROTECTED
+        options.author = true
+        options.header = rootProject.description
+        options.use = true
+        options.splitIndex = true
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addMultilineStringsOption('tag').setValue(['apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:', 'implNote:a:Implementation Note:'])
+        options.encoding = 'UTF-8'
+        options.jFlags '-Xmx1g'
+        options.links(
+
+                'https://docs.oracle.com/javase/8/docs/api/'
+
+        )
+
+        //options.stylesheetFile rootProject.file("src/javadoc/stylesheet.css")
+
+        options
+
+                .group("Jupiter", ["org.softcake.cucumber.actors.*"])
+
+                .group("Vintage", ["org.softcake.cucumber.fairy.*"])
+
+        //setSource subprojects.collect { it.sourceSets.main.allJava }
+
+
+        maxMemory = "1024m"
+        destinationDir = new File(buildDir, "docs/javadoc")
+
+        // Remove Kotlin classes from classpath due to "bad" class file
+
+        // see https://bugs.openjdk.java.net/browse/JDK-8187422
+
+        classpath = files(publishedModules.collect { it.sourceSets.main.compileClasspath })
+
+            subprojects.each { proj ->
+                proj.tasks.withType(Javadoc).each { javadocTask ->
+                    source += javadocTask.source
+                    classpath += javadocTask.classpath
+                    excludes += ["module-info.java"]
+                    includes += javadocTask.includes
+
+
+                }
+            }
+
+
 
     }
 }
