@@ -42,6 +42,7 @@ buildscript {
 //        classpath "org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.16"
 //        classpath "com.gradle:build-scan-plugin:1.11"
         classpath "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
+        classpath "gradle.plugin.io.morethan.jmhreport:gradle-jmh-report:0.7.0"
 
     }
 }
@@ -210,7 +211,7 @@ allprojects { subProject ->
 }
 
 
-configure(rootProject) {
+
     task aggregateJavadocs(type: Javadoc) {
 
 
@@ -257,7 +258,24 @@ configure(rootProject) {
 
         // see https://bugs.openjdk.java.net/browse/JDK-8187422
 
+
+
         classpath = files(publishedModules.collect { it.sourceSets.main.compileClasspath })
+        doFirst {
+//            options.addStringOption('-module-path', 'org.softcake.cucumber.actors')
+
+        }
+//        afterEvaluate {
+//            subprojects.each { proj ->
+//                println(proj.ext.mod)
+//                options.addStringOption('--add-modules', 'org.softcake.cucumber.actors')
+//
+//
+//
+//            }
+//        }
+
+
 
             subprojects.each { proj ->
                 proj.tasks.withType(Javadoc).each { javadocTask ->
@@ -265,6 +283,14 @@ configure(rootProject) {
                     classpath += javadocTask.classpath
                     excludes += ["module-info.java"]
                     includes += javadocTask.includes
+                    //inputs.properties.put(javadocTask.inputs.)
+                    //inputs.properties += javadocTask.inputs.property
+//                    doFirst {
+//                        println(javadocTask.classpath.asPath)
+//                        options.addStringOption('-module-path', javadocTask.classpath.asPath)
+//
+//                    }
+                   // inputs.property("moduleName", javaModule.name)
 
 
                 }
@@ -273,4 +299,3 @@ configure(rootProject) {
 
 
     }
-}

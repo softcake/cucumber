@@ -49,7 +49,7 @@ pom {
     }
 }
 javadoc {
-
+    inputs.property("moduleName", javaModule.name)
     doFirst {
         options.addStringOption('-module-path', classpath.asPath)
     }
