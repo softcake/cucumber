@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 softcake.org.
+ * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-//noinspection GroovyAssignabilityCheck
+apply plugin: "org.sonarqube"
 
-println(project.sonarHostUrl)
 sonarqube.properties {
     property "sonar.host.url", project.sonarHostUrl
     property "sonar.login", project.sonarLogin
@@ -31,7 +30,6 @@ sonarqube.properties {
     property "sonar.links.homepage", github.site
     property "sonar.branch", versioning.info.branch
     property "sonar.scm.disabled", Boolean.TRUE
-    property "sonar.jacoco.reportMissing.force.zero", Boolean.TRUE
 
     if (project.isPullRequest && project.hasTravisSecEnv) {
         property "sonar.analysis.mode", "preview"
@@ -44,15 +42,14 @@ sonarqube.properties {
 
 subprojects {project ->
 
-    sonarqube.skipProject = !(project in rootProject.sonarQubeModules)
-    //noinspection GroovyAssignabilityCheck
+   sonarqube.skipProject = !(project in rootProject.sonarQubeModules) || !project.isValidBranch
+
     sonarqube.properties {
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
         property "sonar.sources", "src/main/java"
         property "sonar.java.binaries", "${project.buildDir}/classes"
         property "sonar.junit.reportsPaths", "${project.buildDir}/test-results/junit-platform"
         if (project in rootProject.integTestModules) {
-            println("test_________________" + project.name)
             property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integrationTest.exec"
             if (sourceSets.integrationTest.allSource.getSrcDirs() != null) {
                 properties["sonar.tests"] += sourceSets.integrationTest.allJava.getSrcDirs()
@@ -62,7 +59,4 @@ subprojects {project ->
     }
 }
 
-sonarqube{
-    println("test_________________" + project.sonarHostUrl)
-}
 

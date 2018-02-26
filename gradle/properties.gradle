@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2017 softcake.org.
+ * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,14 @@ import org.gradle.internal.jvm.Jvm
 import java.text.SimpleDateFormat
 
 status = version.toString().endsWith("-SNAPSHOT") ? 'snapshot' : 'release'
-println(status)
+
 Date buildTimeAndDate = new Date()
+final BRANCH_NAMES_PATTERN = /^(?:release[-\/])?[0-9]+(\.[0-9]+)?\.x$|^(?:feature[-\/]|hotfix[-\/]|develop|master)?$/
 
 ext {
     isSnapshot = version.toString().endsWith("-SNAPSHOT")
     isTravis = System.getenv("TRAVIS") != null
-    isCi = true // TODO isTravis
+    isCi = isTravis
     isPullRequest = isTravis ? System.getenv('TRAVIS_PULL_REQUEST') != "false" : false
     hasTravisSecEnv = System.getenv('TRAVIS_SECURE_ENV_VARS') == "true"
     jvm = Jvm.current()
@@ -35,10 +36,10 @@ ext {
     buildDate = new SimpleDateFormat('yyyy-MM-dd').format(buildTimeAndDate)
     buildTime = new SimpleDateFormat('HH:mm:ss').format(buildTimeAndDate)
     buildYear = new SimpleDateFormat('yyyy').format(buildTimeAndDate)
-    //TODO
     buildRevision = versioning.info.commit
     builtByValue = project.hasProperty("builtBy") ? project.builtBy : project.defaultBuiltBy
-
+    generateManifest = false
+    isValidBranch = versioning.info.branch.matches(BRANCH_NAMES_PATTERN)
 }
 
 ext.normalizeVersion = { versionLiteral ->
