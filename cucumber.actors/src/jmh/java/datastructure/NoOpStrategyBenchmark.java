@@ -1,7 +1,22 @@
-package io.morethan.javabenchmarks.datastructure;
+/*
+ * Copyright 2018 softcake.org.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import java.util.concurrent.TimeUnit;
+package datastructure;
 
+import com.google.common.base.Optional;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -13,7 +28,7 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Warmup;
 
-import com.google.common.base.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Benchmarking two approaches to an optional interface/behavior. Variant a) have a no-operation implementation, variant
@@ -75,14 +90,14 @@ public class NoOpStrategyBenchmark {
 
     private static interface Filterable {
 
-        boolean dropValue(long i);
-
         static Filterable NO_OP_FILTERABLE = new Filterable() {
             @Override
             public boolean dropValue(long i) {
                 return false;
             }
         };
+
+        boolean dropValue(long i);
     }
 
     private static class DropEvenValues implements Filterable {

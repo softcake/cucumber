@@ -1,9 +1,28 @@
-package io.morethan.javabenchmarks.experimental;
+/*
+ * Copyright 2018 softcake.org.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import static org.assertj.core.api.Assertions.assertThat;
+package experimental;
+
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.Assertions;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.CompilerControl;
@@ -56,13 +75,13 @@ public class PullPushBenchmark {
                 consumer.consume(reader.readNext());
             }
         }
-        assertThat(consumer.getSum()).isEqualTo(4950000000000000L);
-        assertThat(consumer.getNullCount()).isEqualTo(1000000);
+        assertEquals(consumer.getSum(),4950000000000000L);
+        assertEquals(consumer.getNullCount(),1000000);
         return consumer.getSum();
     }
 
     @Benchmark
-    @CompilerControl(org.openjdk.jmh.annotations.CompilerControl.Mode.EXCLUDE)
+    @CompilerControl(CompilerControl.Mode.EXCLUDE)
     public long pushWithoutJit() {
         Reader reader = new Reader(MAX, _nulls);
         PushConsumer consumer = new PushConsumer();
@@ -74,8 +93,8 @@ public class PullPushBenchmark {
                 consumer.consume(reader.readNext());
             }
         }
-        assertThat(consumer.getSum()).isEqualTo(4950000000000000L);
-        assertThat(consumer.getNullCount()).isEqualTo(1000000);
+        assertEquals(consumer.getSum(),4950000000000000L);
+        assertEquals(consumer.getNullCount(),1000000);
         return consumer.getSum();
     }
 
@@ -84,19 +103,19 @@ public class PullPushBenchmark {
         Reader reader = new Reader(MAX, _nulls);
         PullConsumer consumer = new PullConsumer();
         consumer.consume(reader);
-        assertThat(consumer.getSum()).isEqualTo(4950000000000000L);
-        assertThat(consumer.getNullCount()).isEqualTo(1000000);
+        assertEquals(consumer.getSum(),4950000000000000L);
+        assertEquals(consumer.getNullCount(),1000000);
         return consumer.getSum();
     }
 
     @Benchmark
-    @CompilerControl(org.openjdk.jmh.annotations.CompilerControl.Mode.EXCLUDE)
+    @CompilerControl(CompilerControl.Mode.EXCLUDE)
     public long pullWithoutJit() {
         Reader reader = new Reader(MAX, _nulls);
         PullConsumer consumer = new PullConsumer();
         consumer.consume(reader);
-        assertThat(consumer.getSum()).isEqualTo(4950000000000000L);
-        assertThat(consumer.getNullCount()).isEqualTo(1000000);
+        assertEquals(consumer.getSum(),4950000000000000L);
+        assertEquals(consumer.getNullCount(),1000000);
         return consumer.getSum();
     }
 
@@ -108,7 +127,7 @@ public class PullPushBenchmark {
         private boolean _nullsDepleted;
         private int[] _nulls;
 
-        public Reader(int max, int[] nulls) {
+        public Reader(final int max, final int[] nulls) {
             _max = max;
             _nulls = nulls;
         }
@@ -139,7 +158,7 @@ public class PullPushBenchmark {
         private long _sum;
         private int _nullCount;
 
-        public void consume(int number) {
+        public void consume(final int number) {
             _sum += number;
         }
 
@@ -161,7 +180,7 @@ public class PullPushBenchmark {
         private long _sum;
         private int _nullCount;
 
-        public void consume(Reader reader) {
+        public void consume(final Reader reader) {
             for (int i = 0; i < reader.getMax(); i++) {
                 boolean nextIsNull = reader.nextIsNull();
                 if (nextIsNull) {
