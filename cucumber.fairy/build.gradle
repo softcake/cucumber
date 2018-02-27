@@ -30,5 +30,5 @@ dependencies {
 javaModule.name = 'org.softcake.cucumber.fairy.app'
 
 mainClassName = 'org.softcake.cucumber.fairy.app.StoryTeller'
-
+description = "The Fairy"
 javadoc.enabled = false

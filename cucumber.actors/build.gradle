@@ -23,10 +23,10 @@ plugins {
 
 // tag::moduleName[]
 javaModule.name = 'org.softcake.cucumber.actors'  // <1>
-ext.mod =javaModule.name
+description = "The Actors"
 // end::moduleName[]
 
 dependencies {
-    // JUnit Jupiter API and TestEngine implementation
-   // jmh ("com.google.guava:guava")
+
+
 }

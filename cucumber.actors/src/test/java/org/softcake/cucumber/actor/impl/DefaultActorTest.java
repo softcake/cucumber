@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2018 softcake.org.
  *
@@ -15,4 +14,18 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors.impl;
+package org.softcake.cucumber.actor.impl;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+
+class DefaultActorTest {
+
+    @Test
+    void getLastName() {
+        DefaultActor actor = new DefaultActor("Kevin", "Costner");
+        assertEquals("Costner", actor.getLastName());
+    }
+}

@@ -20,3 +20,4 @@ plugins {
 }
 
 javaModule.name = 'org.softcake.cucumber.fairy.tale'
+description = "The Tale"

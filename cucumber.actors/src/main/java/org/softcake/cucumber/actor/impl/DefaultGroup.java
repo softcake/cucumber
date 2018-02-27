@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors.impl;
+package org.softcake.cucumber.actor.impl;
 
 import org.softcake.cucumber.actors.Actor;
 import org.softcake.cucumber.actors.Group;

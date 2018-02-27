@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.softcake.cucumber.actors.Actor;
 import org.softcake.cucumber.actors.Imagination;
+import org.softcake.cucumber.actor.impl.DefaultActor;
 
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,7 @@ public class ActorIntegTest {
 
     @Test
     public void canReachDefaultActor() {
-        Actor actor = new org.softcake.cucumber.actors.impl.DefaultActor("Kevin Costner");
+        Actor actor = new DefaultActor("Kevin Costner");
         assertEquals("Kevin Costner", actor.toString());
     }
 }

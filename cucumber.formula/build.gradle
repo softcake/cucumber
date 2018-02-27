@@ -26,3 +26,4 @@ dependencies {
 }
 
 javaModule.name = 'org.softcake.cucumber.fairy.tale.formula'
+description = "The Formula"

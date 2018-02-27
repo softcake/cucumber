@@ -27,3 +27,4 @@ dependencies {
 }
 
 javaModule.name = 'org.softcake.cucumber.fairy.tale.pigs'
+description = "The Pigs"

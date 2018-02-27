@@ -25,5 +25,5 @@ dependencies {
     implementation project(':cucumber.formula')
     implementation project(':cucumber.actors')
 }
-
+description = "The Bears"
 javaModule.name = 'org.softcake.cucumber.fairy.tale.bears'

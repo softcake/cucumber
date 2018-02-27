@@ -41,7 +41,7 @@ public class ModularityTest {
     public void canDynamicallyReachDefaultActor() throws Exception {
         Class clazz = ModularityTest
             .class.getClassLoader()
-            .loadClass("org.softcake.cucumber.actors.impl.DefaultActor");
+            .loadClass("org.softcake.cucumber.actor.impl.DefaultActor");
         Actor actor = (Actor) clazz.getConstructor(String.class)
             .newInstance("Kevin Costner");
         assertEquals("Kevin Costner", actor.toString());

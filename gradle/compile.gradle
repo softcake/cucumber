@@ -18,7 +18,7 @@ import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
 task cleanRoot(type: Delete) {
     delete "$buildDir"
     followSymlinks = true
-    mustRunAfter "clean"
+    //mustRunAfter "clean"
 }
 
 task wrapper(type: Wrapper) {

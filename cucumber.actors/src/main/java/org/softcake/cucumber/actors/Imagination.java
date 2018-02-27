@@ -16,8 +16,8 @@
 
 package org.softcake.cucumber.actors;
 
-import org.softcake.cucumber.actors.impl.DefaultActor;
-import org.softcake.cucumber.actors.impl.DefaultGroup;
+import org.softcake.cucumber.actor.impl.DefaultActor;
+import org.softcake.cucumber.actor.impl.DefaultGroup;
 
 import com.google.common.collect.ImmutableSet;
 
