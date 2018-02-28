@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -42,47 +43,47 @@ import java.util.concurrent.atomic.AtomicLong;
 @State(Scope.Group)
 public class MultithreadedBenchmark {
 
-    private AtomicLong _counter = new AtomicLong();
+    private final AtomicLong _counter = new AtomicLong();
 
     @Group("with1Thread")
     @GroupThreads(1)
     @Benchmark
-    public void increment1() throws Exception {
+    public void increment1() {
         _counter.incrementAndGet();
     }
 
     @Group("with1Thread")
     @GroupThreads(1)
     @Benchmark
-    public long read1() throws Exception {
+    public long read1() {
         return _counter.get();
     }
 
     @Group("with2Threads")
     @GroupThreads(2)
     @Benchmark
-    public void increment2() throws Exception {
+    public void increment2() {
         _counter.incrementAndGet();
     }
 
     @Group("with2Threads")
     @GroupThreads(2)
     @Benchmark
-    public long read2() throws Exception {
+    public long read2() {
         return _counter.get();
     }
 
     @Group("with4Threads")
     @GroupThreads(4)
     @Benchmark
-    public void increment4() throws Exception {
+    public void increment4() {
         _counter.incrementAndGet();
     }
 
     @Group("with4Threads")
     @GroupThreads(4)
     @Benchmark
-    public long read4() throws Exception {
+    public long read4() {
         return _counter.get();
     }
 

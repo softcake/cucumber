@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -37,7 +38,7 @@ public class StringConstantBenchmark {
 
     private static final String STRING_SEPERATOR = ",";
     private static final char CHAR_SEPERATOR = ',';
-    private String[] _tokens = new String[]{"a", "b", "c", "d", "e", "f", "g"};
+    private final String[] _tokens = new String[]{"a", "b", "c", "d", "e", "f", "g"};
 
     private String validate(final String string) {
         assertEquals(string, "a,b,c,d,e,f,g,");

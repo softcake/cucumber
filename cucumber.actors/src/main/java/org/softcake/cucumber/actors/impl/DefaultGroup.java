@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actor.impl;
+package org.softcake.cucumber.actors.impl;
 
 import org.softcake.cucumber.actors.Actor;
 import org.softcake.cucumber.actors.Group;
@@ -25,13 +25,21 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Default Implementation of {@link Group}
+ * Default Implementation of {@link Group}.
+ *
+ * @author The softcake Authors.
  */
 public class DefaultGroup implements Group {
     private final String name;
     private final ImmutableSet<Actor> actors;
 
-    public DefaultGroup(String name, ImmutableSet<Actor> actors) {
+    /**
+     * .
+     *
+     * @param name the Name
+     * @param actors the acors
+     */
+    public DefaultGroup(final String name, final ImmutableSet<Actor> actors) {
         super();
         this.name = name;
         this.actors = actors;
@@ -53,8 +61,8 @@ public class DefaultGroup implements Group {
     }
 
     @Override
-    public boolean contains(Object o) {
-        return actors.contains(o);
+    public boolean contains(final Object obj) {
+        return actors.contains(obj);
     }
 
     @Override
@@ -63,42 +71,42 @@ public class DefaultGroup implements Group {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <T> T[] toArray(final T[] a) {
         return actors.toArray(a);
     }
 
     @Override
     @Deprecated
-    public boolean add(Actor actor) {
+    public boolean add(final Actor actor) {
         return actors.add(actor);
     }
 
     @Override
     @Deprecated
-    public boolean remove(Object o) {
+    public boolean remove(final Object o) {
         return actors.remove(o);
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public boolean containsAll(final Collection<?> c) {
         return actors.containsAll(c);
     }
 
     @Override
     @Deprecated
-    public boolean addAll(Collection<? extends Actor> c) {
+    public boolean addAll(final Collection<? extends Actor> c) {
         return actors.addAll(c);
     }
 
     @Override
     @Deprecated
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(final Collection<?> c) {
         return actors.retainAll(c);
     }
 
     @Override
     @Deprecated
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(final Collection<?> c) {
         return actors.removeAll(c);
     }
 

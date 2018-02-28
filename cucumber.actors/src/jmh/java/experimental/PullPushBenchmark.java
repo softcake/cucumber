@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,13 +17,8 @@
 
 package experimental;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.concurrent.TimeUnit;
-
-import org.junit.jupiter.api.Assertions;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.CompilerControl;
@@ -35,23 +31,18 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
-/**
- * Benchmarking a pull vs push approach.
- * 
- * Interestingly push seems to be faster the pull (some 20%). However, with {@link CompilerControl} set to EXCLUDE, pull
- * does not seem to be effected and push gets a thousand times worse.
- */
+import java.util.concurrent.TimeUnit;
+
 @Fork(value = 2)
 @Warmup(iterations = 7)
 @Measurement(iterations = 5)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
-// @CompilerControl(org.openjdk.jmh.annotations.CompilerControl.Mode.PRINT)
 public class PullPushBenchmark {
 
     private static final int MAX = 100_000_000;
-    private int[] _nulls = new int[(MAX / 100)];
+    private final int[] _nulls = new int[MAX / 100];
 
     @Setup
     public void setup() {
@@ -75,8 +66,8 @@ public class PullPushBenchmark {
                 consumer.consume(reader.readNext());
             }
         }
-        assertEquals(consumer.getSum(),4950000000000000L);
-        assertEquals(consumer.getNullCount(),1000000);
+        assertEquals(consumer.getSum(), 4950000000000000L);
+        assertEquals(consumer.getNullCount(), 1000000);
         return consumer.getSum();
     }
 
@@ -93,8 +84,8 @@ public class PullPushBenchmark {
                 consumer.consume(reader.readNext());
             }
         }
-        assertEquals(consumer.getSum(),4950000000000000L);
-        assertEquals(consumer.getNullCount(),1000000);
+        assertEquals(consumer.getSum(), 4950000000000000L);
+        assertEquals(consumer.getNullCount(), 1000000);
         return consumer.getSum();
     }
 
@@ -103,8 +94,8 @@ public class PullPushBenchmark {
         Reader reader = new Reader(MAX, _nulls);
         PullConsumer consumer = new PullConsumer();
         consumer.consume(reader);
-        assertEquals(consumer.getSum(),4950000000000000L);
-        assertEquals(consumer.getNullCount(),1000000);
+        assertEquals(consumer.getSum(), 4950000000000000L);
+        assertEquals(consumer.getNullCount(), 1000000);
         return consumer.getSum();
     }
 
@@ -114,18 +105,18 @@ public class PullPushBenchmark {
         Reader reader = new Reader(MAX, _nulls);
         PullConsumer consumer = new PullConsumer();
         consumer.consume(reader);
-        assertEquals(consumer.getSum(),4950000000000000L);
-        assertEquals(consumer.getNullCount(),1000000);
+        assertEquals(consumer.getSum(), 4950000000000000L);
+        assertEquals(consumer.getNullCount(), 1000000);
         return consumer.getSum();
     }
 
     public static class Reader {
 
         private final int _max;
+        private final int[] _nulls;
         private int _current;
         private int _currentNull;
         private boolean _nullsDepleted;
-        private int[] _nulls;
 
         public Reader(final int max, final int[] nulls) {
             _max = max;

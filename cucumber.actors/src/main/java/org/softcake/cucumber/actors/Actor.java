@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -17,11 +18,13 @@
 package org.softcake.cucumber.actors;
 
 /**
- * Represents an Actor.
+ * .
+ * @author The softcake Authors.
  */
 public interface Actor {
     /**
-     * Returns the name of the {@link Actor}
+     * .
+     * @return  the name of the {@link Actor}
      *
      */
     String name();

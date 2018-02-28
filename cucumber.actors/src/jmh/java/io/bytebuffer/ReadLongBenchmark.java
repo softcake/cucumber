@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -39,7 +40,8 @@ import java.nio.LongBuffer;
 @State(Scope.Benchmark)
 public class ReadLongBenchmark {
 
-    private ByteBuffer _byteBuffer = ByteBuffer.allocate(64 * 1024).order(ByteOrder.LITTLE_ENDIAN);
+    private final ByteBuffer _byteBuffer = ByteBuffer.allocate(64 * 1024)
+                                                     .order(ByteOrder.LITTLE_ENDIAN);
 
     @Setup
     public void setUp() {
@@ -87,55 +89,58 @@ public class ReadLongBenchmark {
         _byteBuffer.rewind();
     }
 
+    @SuppressWarnings("booleanexpressioncomplexity")
     @Benchmark
     public void oneBytesArray() {
         byte[] bytes = new byte[_byteBuffer.remaining()];
         _byteBuffer.get(bytes);
         for (int i = 0; i < bytes.length / 8; i++) {
             int offset = i * 8;
-            long value = (((long) bytes[offset + 7] << 56) +
-                          ((long) (bytes[offset + 6] & 255) << 48) +
-                          ((long) (bytes[offset + 5] & 255) << 40) +
-                          ((long) (bytes[offset + 4] & 255) << 32) +
-                          ((long) (bytes[offset + 3] & 255) << 24) +
-                          ((bytes[offset + 2] & 255) << 16) +
-                          ((bytes[offset + 1] & 255) << 8) +
-                          ((bytes[offset + 0] & 255) << 0));
+            long value = ((long) bytes[offset + 7] << 56)
+                         + ((long) (bytes[offset + 6] & 255) << 48)
+                         + ((long) (bytes[offset + 5] & 255) << 40)
+                         + ((long) (bytes[offset + 4] & 255) << 32)
+                         + ((long) (bytes[offset + 3] & 255) << 24)
+                         + ((bytes[offset + 2] & 255) << 16)
+                         + ((bytes[offset + 1] & 255) << 8)
+                         + ((bytes[offset + 0] & 255) << 0);
             assertEquals(value, i);
         }
         _byteBuffer.rewind();
     }
 
+    @SuppressWarnings("booleanexpressioncomplexity")
     @Benchmark
     public void chunkedBytesArray() {
         byte[] longChunk = new byte[8];
         for (int i = 0; i < _byteBuffer.capacity() / 8; i++) {
             _byteBuffer.get(longChunk);
-            long value = (((long) longChunk[7] << 56) +
-                          ((long) (longChunk[6] & 255) << 48) +
-                          ((long) (longChunk[5] & 255) << 40) +
-                          ((long) (longChunk[4] & 255) << 32) +
-                          ((long) (longChunk[3] & 255) << 24) +
-                          ((longChunk[2] & 255) << 16) +
-                          ((longChunk[1] & 255) << 8) +
-                          ((longChunk[0] & 255) << 0));
+            final long value = ((long) longChunk[7] << 56)
+                               + ((long) (longChunk[6] & 255) << 48)
+                               + ((long) (longChunk[5] & 255) << 40)
+                               + ((long) (longChunk[4] & 255) << 32)
+                               + ((long) (longChunk[3] & 255) << 24)
+                               + ((longChunk[2] & 255) << 16)
+                               + ((longChunk[1] & 255) << 8)
+                               + (longChunk[0] & 255);
             assertEquals(value, i);
         }
         _byteBuffer.rewind();
     }
 
+    @SuppressWarnings("booleanexpressioncomplexity")
     @Benchmark
     public void singleBytes() {
         int offset = 0;
         for (int i = 0; i < _byteBuffer.capacity() / 8; i++) {
-            long value = (((long) _byteBuffer.get(offset + 7) << 56) +
-                          ((long) (_byteBuffer.get(offset + 6) & 255) << 48) +
-                          ((long) (_byteBuffer.get(offset + 5) & 255) << 40) +
-                          ((long) (_byteBuffer.get(offset + 4) & 255) << 32) +
-                          ((long) (_byteBuffer.get(offset + 3) & 255) << 24) +
-                          ((_byteBuffer.get(offset + 2) & 255) << 16) +
-                          ((_byteBuffer.get(offset + 1) & 255) << 8) +
-                          ((_byteBuffer.get(offset + 0) & 255) << 0));
+            long value = ((long) _byteBuffer.get(offset + 7) << 56)
+                         + ((long) (_byteBuffer.get(offset + 6) & 255) << 48)
+                         + ((long) (_byteBuffer.get(offset + 5) & 255) << 40)
+                         + ((long) (_byteBuffer.get(offset + 4) & 255) << 32)
+                         + ((long) (_byteBuffer.get(offset + 3) & 255) << 24)
+                         + ((_byteBuffer.get(offset + 2) & 255) << 16)
+                         + ((_byteBuffer.get(offset + 1) & 255) << 8)
+                         + ((_byteBuffer.get(offset + 0) & 255) << 0);
             offset += 8;
             assertEquals(value, i);
         }

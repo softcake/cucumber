@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -21,6 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+
+/**
+ * .
+ * @author The softcake Authors.
+ */
 public class GroupTest {
     private static final String NOBODY = "nobodies";
     private static final Group EMPTY = Imagination.createGroup(NOBODY);

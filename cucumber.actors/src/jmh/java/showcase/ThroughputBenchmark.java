@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -37,7 +38,7 @@ import java.util.Random;
 @BenchmarkMode(Mode.Throughput)
 public class ThroughputBenchmark {
 
-    private Random _random = new Random();
+    private final Random _random = new Random();
 
     @Benchmark
     public void sleep50Milliseconds() throws InterruptedException {

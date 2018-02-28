@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,11 +17,6 @@
 
 package showcase.params;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -31,6 +27,11 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Benchmark showing the use of JMH's '@Param' annotation.
@@ -43,12 +44,12 @@ import org.openjdk.jmh.annotations.Warmup;
 @State(Scope.Benchmark)
 public class TwoParamsMultiMethodBenchmark {
 
-    @Param({ "10", "20" })
-    public int a_milis;
-    @Param({ "100", "500", "1000" })
-    public int b_micros;
+    @Param({"10", "20"})
+    private int a_milis;
+    @Param({"100", "500", "1000"})
+    private int b_micros;
 
-    private Timer _timer = new Timer();
+    private final Timer _timer = new Timer();
 
     @Benchmark
     public void sleep() throws InterruptedException {

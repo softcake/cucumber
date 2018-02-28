@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -41,8 +42,8 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class SyntheticAccessorBenchmark {
 
-    private ClassWithPrivateMethod _classWithPrivateMethod = new ClassWithPrivateMethod();
-    private ClassWithProtectedMethod _classWithProtectedMethod = new ClassWithProtectedMethod();
+    private final ClassWithPrivateMethod _classWithPrivateMethod = new ClassWithPrivateMethod();
+    private final ClassWithProtectedMethod _classWithProtectedMethod = new ClassWithProtectedMethod();
 
     @Benchmark
     @SuppressWarnings("synthetic-access")
@@ -57,7 +58,7 @@ public class SyntheticAccessorBenchmark {
 
     protected static class ClassWithPrivateMethod {
 
-        private Random _random = new Random(23);
+        private final Random _random = new Random(23);
 
         private int nextInt() {
             return _random.nextInt();
@@ -66,7 +67,7 @@ public class SyntheticAccessorBenchmark {
 
     protected static class ClassWithProtectedMethod {
 
-        private Random _random = new Random(23);
+        private final Random _random = new Random(23);
 
         protected int nextInt() {
             return _random.nextInt();

@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,7 +16,6 @@
  */
 
 package datastructure;
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -46,9 +46,9 @@ public class NullIndexBenchmark {
 
     private static final int MAX = 100_000_000;
     private static final int EVERY_NULL_ELEMENT = 100;
-    private int[] _nullsIndices = new int[(MAX / EVERY_NULL_ELEMENT)];
-    private boolean[] _nullsFlags = new boolean[MAX];
-    private BitSet _nullsBitSet = new BitSet(MAX);
+    private final int[] _nullsIndices = new int[MAX / EVERY_NULL_ELEMENT];
+    private final boolean[] _nullsFlags = new boolean[MAX];
+    private final BitSet _nullsBitSet = new BitSet(MAX);
 
     @Setup
     public void setup() {

@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,10 +17,9 @@
 
 package org.softcake.cucumber.actors;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.softcake.cucumber.actor.impl.DefaultActor;
+import org.softcake.cucumber.actors.impl.DefaultActor;
 
 import org.junit.jupiter.api.Test;
 

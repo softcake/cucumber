@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -18,8 +19,6 @@ package string;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.CompilerControl;
@@ -31,6 +30,9 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
+import java.util.concurrent.TimeUnit;
+
+
 @Fork(value = 2)
 @Warmup(iterations = 3)
 @Measurement(iterations = 10)
@@ -40,11 +42,11 @@ import org.openjdk.jmh.annotations.Warmup;
 @CompilerControl(CompilerControl.Mode.EXCLUDE)
 public class ConcatenatedStringBenchmark {
 
-    private String[] _strings = new String[] { "This", " is", " a", " concatenated", " String!" };
+    private final String[] _strings = new String[]{"This", " is", " a", " concatenated", " String!"};
 
     private String validate(final String string) {
 
-        assertEquals(string.length(),"This is a concatenated String!".length());
+        assertEquals(string.length(), "This is a concatenated String!".length());
         return string;
     }
 

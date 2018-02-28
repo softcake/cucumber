@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -18,7 +19,7 @@ import org.softcake.cucumber.fairy.tale.Tale;
 import org.softcake.cucumber.fairy.tale.bears.GoldilocksAndTheThreeBears;
 
 module org.softcake.cucumber.fairy.tale.bears {
-    requires org.softcake.cucumber.actors;
+    requires org.softcake.cucumber.actors.api;
     requires transitive org.softcake.cucumber.fairy.tale;
     requires org.softcake.cucumber.fairy.tale.formula;
 

@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -30,10 +31,7 @@ import org.openjdk.jmh.annotations.Warmup;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Benchmarking two approaches to an optional interface/behavior. Variant a) have a no-operation implementation, variant
- * b) handle a null instance, variant c) have a optional.
- */
+
 @Fork(value = 2)
 @Warmup(iterations = 3)
 @Measurement(iterations = 5)
@@ -51,7 +49,9 @@ public class NoOpStrategyBenchmark {
 
     @TearDown
     public void tearDown() {
-        assert _currentValue > 0 : String.format("Expected _currentValue be greater then 0 but was %s", _currentValue);
+        assert _currentValue > 0 : String.format(
+            "Expected _currentValue be greater then 0 but was %s",
+            _currentValue);
     }
 
     @Benchmark
@@ -88,11 +88,12 @@ public class NoOpStrategyBenchmark {
         return _dropEvenFilterable.dropValue(_currentValue++);
     }
 
-    private static interface Filterable {
 
-        static Filterable NO_OP_FILTERABLE = new Filterable() {
+    private interface Filterable {
+
+        Filterable NO_OP_FILTERABLE = new Filterable() {
             @Override
-            public boolean dropValue(long i) {
+            public boolean dropValue(final long i) {
                 return false;
             }
         };
@@ -103,7 +104,7 @@ public class NoOpStrategyBenchmark {
     private static class DropEvenValues implements Filterable {
 
         @Override
-        public boolean dropValue(long i) {
+        public boolean dropValue(final long i) {
             return i % 2 == 0;
         }
 

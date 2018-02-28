@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -210,24 +211,40 @@ allprojects { subProject ->
     }
 }
 
-
 evaluationDependsOnChildren()
 task aggregateJavadocs(type: Javadoc) {
 
-    group = "Documentation"
+    group JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Generates aggregated Javadocs"
     title = Character.toUpperCase(project.name.charAt(0)).toString() + project.name.substring(1) + " ${version} API"
+    def moduleNames = ""
 
     publishedModules.each { proj ->
+
+        options.group(proj.name, [project.reverseDomain + "." + proj.name + ".*"])
+        moduleNames += proj.javaModule.name + ","
         proj.tasks.create("copyDocs", Copy) {
+            group JavaBasePlugin.BUILD_TASK_NAME
             from 'src/main/java'
             into "$rootProject.buildDir/docscr/${proj.javaModule.name}"
         }
     }
 
+    moduleNames = moduleNames.subSequence(0, moduleNames.length() - 1)
+
     setDependsOn subprojects.collect { it.tasks.getByName("jar") }
     setDependsOn subprojects.collect { it.tasks.getByName("copyDocs") }
+    setSource file("$buildDir/docscr")
 
+    maxMemory = "1024m"
+    destinationDir = new File(buildDir, "docs/javadoc")
+    classpath = files(publishedModules.collect { it.sourceSets.main.compileClasspath })
+
+    options.addStringOption('-module', moduleNames)
+    //bad workaround for java 9 modules
+    // excludes += ["module-info.java"]
+    options.addStringOption('-module-source-path', "$rootProject.buildDir/docscr/")
+    options.addStringOption( '-module-path', classpath.asPath)
     options.addStringOption('-html5')
     options.memberLevel = JavadocMemberLevel.PROTECTED
     options.author = true
@@ -241,27 +258,4 @@ task aggregateJavadocs(type: Javadoc) {
     options.links(
             'https://docs.oracle.com/javase/9/docs/api/'
     )
-
-    setSource file("$buildDir/docscr")
-
-    maxMemory = "1024m"
-    destinationDir = new File(buildDir, "docs/javadoc")
-
-    classpath = files(publishedModules.collect { it.sourceSets.main.compileClasspath })
-
-    //bad workaround for java 9 modules
-   // excludes += ["module-info.java"]
-    options.addStringOption('-module-source-path', "$rootProject.buildDir/docscr/")
-    options.addStringOption( '-module-path', classpath.asPath)
-
-
-    def moduleNames = ""
-
-    publishedModules.each { proj ->
-        moduleNames += proj.javaModule.name + ","
-    }
-    moduleNames = moduleNames.subSequence(0, moduleNames.length() - 1)
-    options.addStringOption('-module', moduleNames)
-
-
 }

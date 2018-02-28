@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,26 +17,29 @@
 
 package org.softcake.cucumber.actors;
 
-import org.softcake.cucumber.actor.impl.DefaultActor;
-import org.softcake.cucumber.actor.impl.DefaultGroup;
+import org.softcake.cucumber.actors.impl.DefaultActor;
+import org.softcake.cucumber.actors.impl.DefaultGroup;
 
 import com.google.common.collect.ImmutableSet;
 
 /**
  * The place where {@link Actor}s and {@link Group}s come from.
  */
-public class Imagination {
+public final class Imagination {
+    private Imagination() {
+    }
+
     /**
      * Creates and returns an {@link Actor} with the given <code>name</code>.
      */
-    public static Actor createActor(String name) {
+    public static Actor createActor(final String name) {
         return new DefaultActor(name);
     }
 
     /**
      * Creates a {@link Group} with the given <code>name</code> containing the <code>actors</code>
      */
-    public static Group createGroup(String name, Actor... actors) {
+    public static Group createGroup(final String name, final Actor... actors) {
         return new DefaultGroup(name, ImmutableSet.copyOf(actors));
     }
 }

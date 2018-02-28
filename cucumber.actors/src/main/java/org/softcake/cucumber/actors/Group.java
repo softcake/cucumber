@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -20,10 +21,13 @@ import java.util.Set;
 
 /**
  * Represents some {@link Actor}s.
+ *
+ *  @author The softcake Authors.
  */
 public interface Group extends Set<Actor>, Actor {
     /**
-     * Returns the size of the {@link Group}
+     * .
+     * @return  the size of the {@link Group}
      */
     int size();
 }

@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -89,8 +90,8 @@ public class SwitchVsPolymorphismBenchmark {
 
     }
 
-    public static enum Type {
-        INT, STRING;
+    public enum Type {
+        INT, STRING
     }
 
     public static abstract class SwitchReader {
@@ -152,7 +153,7 @@ public class SwitchVsPolymorphismBenchmark {
 
     }
 
-    public static interface Consumer {
+    public interface Consumer {
         Type getType();
     }
 

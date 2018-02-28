@@ -1,6 +1,7 @@
 
 
 <!--
+  ~
   ~ Copyright 2018 softcake.org.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License").
@@ -21,21 +22,23 @@
         "http://checkstyle.sourceforge.net/dtds/suppressions_1_2.dtd">
 
 <suppressions>
-    <suppress checks="JavadocStyleCheck" files="(.*Tests*|Mock.*|Test.*|Jmh.*)\.java"/>
-    <suppress checks="JavadocStyle" files="(.*Tests*|Mock.*|Test.*|Jmh.*)\.java"/>
-    <suppress checks="JavadocStyle" files=".*[\\/]documentation[\\/]"/>
-    <suppress checks="JavadocStyleCheck" files=".*[\\/]documentation[\\/]"/>
-    <suppress checks="JavadocMethod" files="(.*Tests*|Mock.*|Test.*|Jmh.*)\.java"/>
+    <!--<suppress checks="JavadocStyleCheck" files="(.*Tests*|Mock.*|Test.*|Jmh.*)\.java"/>-->
+    <!--<suppress checks="JavadocStyle" files="(.*Tests*|Mock.*|Test.*|Jmh.*)\.java"/>-->
+    <!--<suppress checks="JavadocStyle" files=".*[\\/]documentation[\\/]"/>-->
+    <!--<suppress checks="JavadocStyleCheck" files=".*[\\/]documentation[\\/]"/>-->
+    <suppress checks="JavadocMethod" files="(.*Tests*|Mock.*|Test.*|Jmh.*|Benchmark.*)\.java"/>
     <suppress checks="JavadocMethod" files=".*[\\/]documentation[\\/]"/>
-    <suppress checks="Javadoc" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>
-    <suppress checks="Javadoc" files=".*[\\/]documentation[\\/]"/>
+    <!--<suppress checks="Javadoc" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>-->
+    <!--<suppress checks="Javadoc" files=".*[\\/]documentation[\\/]"/>-->
     <suppress checks="MagicNumber" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>
-    <suppress checks="UncommentedMain" files=".*[\\/]src[\\/](test|integTest|jmh)[\\/]"/>
+    <!--<suppress checks="UncommentedMain" files=".*[\\/]src[\\/](test|integTest|jmh)[\\/]"/>-->
     <suppress checks="JavadocPackage" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>
     <suppress checks="JavadocPackage" files=".*[\\/]documentation[\\/]"/>
-    <suppress checks="RedundantModifier" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>
-    <suppress checks="JavadocType" files="(.*Tests*|Mock.*|Test.*)\.java"/>
-    <suppress checks="JavadocVariable" files="(.*Tests*|Mock.*|Test.*|Jmh.*)\.java"/>
+    <!--<suppress checks="RedundantModifier" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>-->
+    <suppress checks="JavadocType" files="(.*Tests*|Mock.*|Test.*|Jmh.*|Benchmark.*)\.java"/>
+    <suppress checks="JavadocType" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>
+    <suppress checks="JavadocVariable" files="(.*Tests*|Mock.*|Test.*|Jmh.*|Benchmark.*)\.java"/>
+    <suppress checks="WriteTag" files="(.*Tests*|Mock.*|Test.*|Jmh.*|Benchmark.*)\.java"/>
     <suppress id="MethodNameRegular" files="[\\/]src[\\/](test|integrationTest|jmh)[\\/].*"/>
     <suppress id="MethodNameTest" files="[\\/]src[\\/]main[\\/].*"/>
     <suppress checks="MethodCount" files=".*[\\/]src[\\/](test|integrationTest|jmh)[\\/]"/>

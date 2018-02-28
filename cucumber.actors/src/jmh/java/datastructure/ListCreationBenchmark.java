@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -29,6 +30,10 @@ import org.openjdk.jmh.annotations.Warmup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * .
+ * @author The softcake Authors.
+ */
 @Fork(value = 2)
 @Warmup(iterations = 3)
 @Measurement(iterations = 5)
@@ -37,7 +42,7 @@ import java.util.List;
 public class ListCreationBenchmark {
 
     private static final int ELEMENT_COUNT = 16;
-    private List<String> _list = new ArrayList<>(ELEMENT_COUNT);
+    private final List<String> _list = new ArrayList<>(ELEMENT_COUNT);
 
     @Benchmark
     public List<String> arrayList() {

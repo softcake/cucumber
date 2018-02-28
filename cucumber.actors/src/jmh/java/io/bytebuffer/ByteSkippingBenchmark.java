@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,13 +17,7 @@
 
 package io.bytebuffer;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.LongBuffer;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -34,6 +29,11 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.LongBuffer;
+
+
 @Fork(value = 2)
 @Warmup(iterations = 3)
 @Measurement(iterations = 5)
@@ -41,7 +41,8 @@ import org.openjdk.jmh.annotations.Warmup;
 @State(Scope.Benchmark)
 public class ByteSkippingBenchmark {
 
-    private ByteBuffer _byteBuffer = ByteBuffer.allocate(64 * 1024).order(ByteOrder.LITTLE_ENDIAN);
+    private final ByteBuffer _byteBuffer = ByteBuffer.allocate(64 * 1024)
+                                                     .order(ByteOrder.LITTLE_ENDIAN);
 
     @Setup
     public void setUp() {
@@ -51,9 +52,12 @@ public class ByteSkippingBenchmark {
         _byteBuffer.flip();
     }
 
-    private boolean shouldSkip(final int i) {
-        int singleDigitNumber = i % 10;
-        return singleDigitNumber == 3 || singleDigitNumber == 4 || singleDigitNumber == 5 || singleDigitNumber == 8;
+    private boolean shouldSkip(final int digitNumber) {
+        int singleDigitNumber = digitNumber % 10;
+        return singleDigitNumber == 3
+               || singleDigitNumber == 4
+               || singleDigitNumber == 5
+               || singleDigitNumber == 8;
     }
 
     @Benchmark

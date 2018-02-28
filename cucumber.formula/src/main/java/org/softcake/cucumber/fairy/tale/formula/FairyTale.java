@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -29,21 +30,36 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Represents a fairy tale.
+ * .
+ *
+ * @author The softcake Authors.
  */
-public class FairyTale implements Tale {
+public final class FairyTale implements Tale {
+    /**
+     * The Separator.
+     */
+    public static final String LINE_SEPARATOR = "line.separator";
     private final List<Actor> actors;
     private final List<Event> events;
 
-    private FairyTale(List<Actor> actors, List<Event> events) {
+    private FairyTale(final List<Actor> actors, final List<Event> events) {
         this.actors = actors;
         this.events = events;
+    }
+
+    /**
+     * get the Weaver.
+     *
+     * @return the weaver.
+     */
+    public static Weaver getWeaver() {
+        return new Weaver(new HashSet<>(), new HashSet<>(), new ArrayList<>());
     }
 
     @Override
     public void tell() {
         StringBuilder builder = new StringBuilder("Once upon a time, there lived ");
-        for (int i=0; i < actors.size(); i++) {
+        for (int i = 0; i < actors.size(); i++) {
             if (i == actors.size() - 1 && i != 0) {
                 builder.append("and ");
             }
@@ -52,54 +68,75 @@ public class FairyTale implements Tale {
                 builder.append(", ");
             }
         }
-        builder.append(".").append(System.getProperty("line.separator"));
+        builder.append(".").append(System.getProperty(LINE_SEPARATOR));
 
         for (Event event : events) {
-            builder.append(event).append(System.getProperty("line.separator"));
+            builder.append(event).append(System.getProperty(LINE_SEPARATOR));
         }
         builder.append("And they all lived happily ever after.")
-                .append(System.getProperty("line.separator"))
-                .append(System.getProperty("line.separator"));
+               .append(System.getProperty(LINE_SEPARATOR))
+               .append(System.getProperty(LINE_SEPARATOR));
         System.out.print(builder.toString());
     }
 
-    public static Weaver getWeaver() {
-        return new Weaver(new HashSet<>(), new HashSet<>(), new ArrayList<>());
-    }
-
-    public static class Weaver {
+    /**
+     * The Weaver class.
+     *
+     * @author The softcake Authors.
+     */
+    public static final class Weaver {
         private final Set<Actor> actorSet;
         private final Set<Actor> groupActors;
         private final List<Event> events;
 
-        private Weaver(Set<Actor> actorSet, Set<Actor> groupActors, List<Event> events) {
+        private Weaver(final Set<Actor> actorSet, final Set<Actor> groupActors, final List<Event> events) {
             this.actorSet = actorSet;
             this.groupActors = groupActors;
             this.events = events;
         }
 
+        /**
+         * weave.
+         *
+         * @return weave.
+         */
         public Tale weave() {
             List<Actor> actors = new ArrayList<>();
             actors.addAll(actorSet);
             return new FairyTale(actors, events);
         }
 
-        public Weaver record(Actor actor, String action) {
+        /**
+         * record.
+         *
+         * @param actor  the actor
+         * @param action the action
+         * @return the weaver
+         */
+        public Weaver record(final Actor actor, final String action) {
             addActorOrGroup(actor);
             events.add(new IntransativeEvent(actor, action));
             return this;
         }
 
-        public Weaver record(Actor actor, String action, Actor object) {
+        /**
+         * record.
+         *
+         * @param actor the actor
+         * @param action the action
+         * @param object the object
+         * @return the record
+         */
+        public Weaver record(final Actor actor, final String action, final Actor object) {
             addActorOrGroup(actor);
             addActorOrGroup(object);
             events.add(new TransitiveEvent(actor, action, object));
             return this;
         }
 
-        private void addActorOrGroup(Actor actor) {
+        private void addActorOrGroup(final Actor actor) {
             if (actor instanceof Group) {
-                for(Actor a : (Group) actor) {
+                for (Actor a : (Group) actor) {
                     actorSet.remove(a);
                     groupActors.add(a);
                 }

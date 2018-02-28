@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -26,7 +27,7 @@ public class TransitiveEvent implements Event {
     private final String action;
     private final Actor object;
 
-    public TransitiveEvent(Actor actor, String action, Actor object) {
+    public TransitiveEvent(final Actor actor, final String action, final Actor object) {
         this.actor = actor;
         this.action = action;
         this.object = object;

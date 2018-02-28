@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -25,7 +26,7 @@ public class IntransativeEvent implements Event {
     private final Actor actor;
     private final String action;
 
-    public IntransativeEvent(Actor actor, String action) {
+    public IntransativeEvent(final Actor actor, final String action) {
         this.actor = actor;
         this.action = action;
     }

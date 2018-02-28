@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,8 +17,6 @@
 
 package showcase.params;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -28,6 +27,8 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Benchmark showing the use of JMH's '@Param' annotation.
@@ -41,11 +42,11 @@ import org.openjdk.jmh.annotations.Warmup;
 public class ThreeParamsSingleMethodBenchmark {
 
     @Param({ "10", "20" })
-    public int a_milis;
+    private int a_milis;
     @Param({ "100", "500", "1000" })
-    public int b_micros;
+    private int b_micros;
     @Param({ "1000", "3000" })
-    public int c_nanos;
+    private int c_nanos;
 
     @Benchmark
     public void sleep() throws InterruptedException {

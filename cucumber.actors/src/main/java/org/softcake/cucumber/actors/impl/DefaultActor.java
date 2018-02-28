@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -14,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actor.impl;
+package org.softcake.cucumber.actors.impl;
 
 import org.softcake.cucumber.actors.Actor;
 
@@ -24,26 +25,16 @@ import com.google.common.base.Preconditions;
  * .
  * Default implementation of {@link Actor}
  *
- * @author Rene Neubert
+ * @author The softcake Authors.
  */
 public class DefaultActor implements Actor {
+    private final String lastName;
     private String name;
     private String sex;
-
 
     /**
      * Constructor.
      *
-     * @return a string
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    private final String lastName;
-
-    /**
-     * Constructor.
      * @param name the name
      */
     public DefaultActor(final String name) {
@@ -53,13 +44,24 @@ public class DefaultActor implements Actor {
     }
 
     /**
-     * @param name the firstname
+     * Constructor.
+     *
+     * @param name     the firstname
      * @param lastName the lastname
      */
     public DefaultActor(final String name, final String lastName) {
         Preconditions.checkNotNull(name);
         this.name = name;
         this.lastName = lastName;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @return a string
+     */
+    public String getLastName() {
+        return lastName;
     }
 
     @Override
@@ -75,6 +77,7 @@ public class DefaultActor implements Actor {
 
     /**
      * Sets the firstname.
+     *
      * @param name the firstname
      */
     public void setName(final String name) {
@@ -82,7 +85,8 @@ public class DefaultActor implements Actor {
     }
 
     /**
-     * To get the sex.
+     * Get the sex.
+     *
      * @return the sex string
      */
     public String getSex() {

@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -25,10 +26,10 @@ import org.junit.jupiter.api.Test;
  */
 class ImaginationTest {
 
-	@Test
-	void createActor() {
+    @Test
+    void createActor() {
 
-		Actor actor = Imagination.createActor("Sean");
-		assertEquals("Sean", actor.toString());
-	}
+        Actor actor = Imagination.createActor("Sean");
+        assertEquals("Sean", actor.toString());
+    }
 }

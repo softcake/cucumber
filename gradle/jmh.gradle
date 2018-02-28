@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -58,10 +59,10 @@ task jmh(type: JavaExec, description: 'Executing JMH benchmarks', group:'Develop
     classpath = sourceSets.jmh.runtimeClasspath
     main = 'org.openjdk.jmh.Main'
 
-    def include = project.properties.get('include', '');
-    def exclude = project.properties.get('exclude');
-    def format = project.properties.get('format', 'json');
-    def profilers = project.properties.get('profilers');
+    def include = project.properties.get('include', '')
+    def exclude = project.properties.get('exclude')
+    def format = project.properties.get('format', 'json')
+    def profilers = project.properties.get('profilers')
     def jvmArgs = project.properties.get('jvmArgs')
 
     def resultFile = file("build/reports/jmh/result.${format}")

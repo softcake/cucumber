@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -32,7 +33,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Accessing all members of a list vs all members of an array.
+ * .
+ * @author The softcake Authors.
  */
 @Fork(value = 2)
 @Warmup(iterations = 3)
@@ -42,8 +44,8 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class ListVsArrayBenchmark {
 
-    private List<Integer> _list = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-    private Integer[] _array = new Integer[]{1, 2, 3, 4};
+    private final List<Integer> _list = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+    private final Integer[] _array = new Integer[]{1, 2, 3, 4};
 
     @Benchmark
     public int list_forEach() {

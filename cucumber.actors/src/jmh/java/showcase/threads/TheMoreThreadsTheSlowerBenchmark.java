@@ -1,4 +1,5 @@
 /*
+ *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,9 +17,6 @@
 
 package showcase.threads;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -29,6 +27,9 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Benchmarks using multithreaded JMH facilities.
@@ -41,7 +42,7 @@ import org.openjdk.jmh.annotations.Warmup;
 @State(Scope.Benchmark)
 public class TheMoreThreadsTheSlowerBenchmark {
 
-    private WorkPool _workPool = new WorkPool();
+    private final WorkPool _workPool = new WorkPool();
 
     @Benchmark
     @Threads(1)
@@ -69,7 +70,7 @@ public class TheMoreThreadsTheSlowerBenchmark {
 
     public static class WorkPool {
 
-        private AtomicInteger _threadsDoingWork = new AtomicInteger();
+        private final AtomicInteger _threadsDoingWork = new AtomicInteger();
 
         public void doWork() throws InterruptedException {
             int threadsDoingWork = _threadsDoingWork.getAndIncrement();
