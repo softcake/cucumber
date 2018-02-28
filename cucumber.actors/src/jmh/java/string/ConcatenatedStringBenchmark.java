@@ -70,11 +70,11 @@ public class ConcatenatedStringBenchmark {
 
     @Benchmark
     public String pluses() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (String string : _strings) {
-            result += string;
+            result.append(string);
         }
-        return validate(result);
+        return validate(result.toString());
     }
 
     @Benchmark

@@ -101,8 +101,7 @@ public final class FairyTale implements Tale {
          * @return weave.
          */
         public Tale weave() {
-            List<Actor> actors = new ArrayList<>();
-            actors.addAll(actorSet);
+            List<Actor> actors = new ArrayList<>(actorSet);
             return new FairyTale(actors, events);
         }
 

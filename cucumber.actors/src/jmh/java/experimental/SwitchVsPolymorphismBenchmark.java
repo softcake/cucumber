@@ -17,8 +17,6 @@
 
 package experimental;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -28,6 +26,8 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Benchmarking different ways coupling a primitive reader with a primitive consumer.
@@ -40,10 +40,10 @@ import org.openjdk.jmh.annotations.Warmup;
 @State(Scope.Benchmark)
 public class SwitchVsPolymorphismBenchmark {
 
-    IntConsumer _intConsumer = new IntConsumer();
-    PolymorphicIntReader _polymorphicReader = new PolymorphicIntReader();
-    SwitchIntReader _switchReader = new SwitchIntReader();
-    CoupledIntReader _coupledReader = new CoupledIntReader(_intConsumer);
+    private IntConsumer _intConsumer = new IntConsumer();
+    private PolymorphicIntReader _polymorphicReader = new PolymorphicIntReader();
+    private SwitchIntReader _switchReader = new SwitchIntReader();
+    private CoupledIntReader _coupledReader = new CoupledIntReader(_intConsumer);
 
     @Benchmark
     public int polymorphic() {
@@ -96,7 +96,7 @@ public class SwitchVsPolymorphismBenchmark {
 
     public static abstract class SwitchReader {
 
-        public final void read(Consumer consumer) {
+        final void read(Consumer consumer) {
             switch (consumer.getType()) {
             case INT:
                 readInt((IntConsumer) consumer);
@@ -113,7 +113,7 @@ public class SwitchVsPolymorphismBenchmark {
             throw new UnsupportedOperationException();
         }
 
-        protected void readString(StringConsumer consumer) {
+        void readString(StringConsumer consumer) {
             throw new UnsupportedOperationException();
         }
 
@@ -141,7 +141,7 @@ public class SwitchVsPolymorphismBenchmark {
         private int _current;
         private final IntConsumer _consumer;
 
-        public CoupledIntReader(IntConsumer consumer) {
+        CoupledIntReader(IntConsumer consumer) {
             _consumer = consumer;
         }
 
@@ -161,7 +161,7 @@ public class SwitchVsPolymorphismBenchmark {
 
         private int _current;
 
-        public int getCurrent() {
+        int getCurrent() {
             return _current;
         }
 

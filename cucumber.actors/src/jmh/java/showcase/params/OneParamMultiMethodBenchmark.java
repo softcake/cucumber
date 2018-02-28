@@ -68,8 +68,7 @@ public class OneParamMultiMethodBenchmark {
     }
 
     private long paramsToTime() {
-        long time = a_milis;
-        return time;
+        return (long) a_milis;
     }
 
 }

@@ -44,7 +44,7 @@ buildscript {
 //        classpath "com.gradle:build-scan-plugin:1.11"
         classpath "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
         classpath "gradle.plugin.io.morethan.jmhreport:gradle-jmh-report:0.7.0"
-
+        classpath "gradle.plugin.org.gradle.guides:gradle-guides-plugin:0.11.3"
     }
 }
 
@@ -91,7 +91,7 @@ ext {
 
     sonarQubeModules = publishedModules
 
-    publishArtifacts = true
+    publishArtifacts = false
     checkCodeQuality = true
     ignoreFailures = true
 }
@@ -132,6 +132,7 @@ subprojects { subProject ->
         apply from: "$rootDir/gradle/bintray.gradle"
         apply from: "$rootDir/gradle/artifactory.gradle"
         apply from: "$rootDir/gradle/code-quality.gradle"
+
         // common dependencies
         dependencies {
             // JUnit Jupiter API and TestEngine implementation
@@ -149,12 +150,12 @@ subprojects { subProject ->
 
     if (subProject in sonarQubeModules) {
         apply from: file("$rootDir/gradle/coverage.gradle")
-
     }
 
     if (subProject in integTestModules) {
         apply from: file("$rootDir/gradle/integrationTest.gradle")
     }
+
     if (project in benchmarkModules) {
         apply from: "$rootDir/gradle/jmh.gradle"
     }
@@ -211,6 +212,53 @@ allprojects { subProject ->
     }
 }
 
+
+apply plugin: "org.gradle.guides.tutorial"
+
+
+
+
+guide {
+    repoPath = 'softcake/cucumber'
+    mainAuthor = 'Pepper Lebeck-Jobe'
+}
+
+asciidoctor {
+    inputs.dir files('src/cucumber.actors')
+    attributes originaldir: file('src/cucumber.actors')
+//    attributes singledir: file('src/1-single-module')
+//    attributes alldir: file('src/2-all-modules')
+//    attributes appdir: file('src/3-application')
+//    attributes plugindir: file('src/4-plugin')
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 evaluationDependsOnChildren()
 task aggregateJavadocs(type: Javadoc) {
 
@@ -223,7 +271,7 @@ task aggregateJavadocs(type: Javadoc) {
 
         options.group(proj.name, [project.reverseDomain + "." + proj.name + ".*"])
         moduleNames += proj.javaModule.name + ","
-        proj.tasks.create("copyDocs", Copy) {
+        proj.tasks.create("copyModules", Copy) {
             group JavaBasePlugin.BUILD_TASK_NAME
             from 'src/main/java'
             into "$rootProject.buildDir/docscr/${proj.javaModule.name}"
@@ -232,8 +280,7 @@ task aggregateJavadocs(type: Javadoc) {
 
     moduleNames = moduleNames.subSequence(0, moduleNames.length() - 1)
 
-    setDependsOn subprojects.collect { it.tasks.getByName("jar") }
-    setDependsOn subprojects.collect { it.tasks.getByName("copyDocs") }
+    setDependsOn subprojects.collect { it.tasks.getByName("copyModules") }
     setSource file("$buildDir/docscr")
 
     maxMemory = "1024m"
@@ -241,8 +288,7 @@ task aggregateJavadocs(type: Javadoc) {
     classpath = files(publishedModules.collect { it.sourceSets.main.compileClasspath })
 
     options.addStringOption('-module', moduleNames)
-    //bad workaround for java 9 modules
-    // excludes += ["module-info.java"]
+
     options.addStringOption('-module-source-path', "$rootProject.buildDir/docscr/")
     options.addStringOption( '-module-path', classpath.asPath)
     options.addStringOption('-html5')

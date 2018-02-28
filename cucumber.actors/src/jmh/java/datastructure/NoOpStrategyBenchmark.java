@@ -91,12 +91,7 @@ public class NoOpStrategyBenchmark {
 
     private interface Filterable {
 
-        Filterable NO_OP_FILTERABLE = new Filterable() {
-            @Override
-            public boolean dropValue(final long i) {
-                return false;
-            }
-        };
+        Filterable NO_OP_FILTERABLE = i -> false;
 
         boolean dropValue(long i);
     }

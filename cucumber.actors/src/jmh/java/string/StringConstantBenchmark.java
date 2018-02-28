@@ -17,7 +17,6 @@
 
 package string;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.openjdk.jmh.annotations.Benchmark;

@@ -23,7 +23,8 @@ import org.softcake.cucumber.fairy.tale.Tale;
 import org.softcake.cucumber.fairy.tale.formula.FairyTale;
 
 /**
- * The classic tale of "The Three Little Pigs"
+ * .
+ * @author The Softcake Authors.
  */
 public class ThreeLittlePigs implements Tale {
     private Tale fairyTale;

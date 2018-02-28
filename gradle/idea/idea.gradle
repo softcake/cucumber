@@ -147,7 +147,7 @@ void createCodeStyle() {
 
 }
 
-void copyFile(String sourcePath, String targetPath) {
+static void copyFile(String sourcePath, String targetPath) {
     java.nio.file.Path source = new File(sourcePath).toPath()
     java.nio.file.Path target = new File(targetPath).toPath()
     Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING)

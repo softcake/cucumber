@@ -103,7 +103,7 @@ public class ReadLongBenchmark {
                          + ((long) (bytes[offset + 3] & 255) << 24)
                          + ((bytes[offset + 2] & 255) << 16)
                          + ((bytes[offset + 1] & 255) << 8)
-                         + ((bytes[offset + 0] & 255) << 0);
+                         + ((bytes[offset] & 255));
             assertEquals(value, i);
         }
         _byteBuffer.rewind();
@@ -140,7 +140,7 @@ public class ReadLongBenchmark {
                          + ((long) (_byteBuffer.get(offset + 3) & 255) << 24)
                          + ((_byteBuffer.get(offset + 2) & 255) << 16)
                          + ((_byteBuffer.get(offset + 1) & 255) << 8)
-                         + ((_byteBuffer.get(offset + 0) & 255) << 0);
+                         + ((_byteBuffer.get(offset) & 255) << 0);
             offset += 8;
             assertEquals(value, i);
         }
