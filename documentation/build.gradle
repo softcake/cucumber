@@ -22,18 +22,24 @@ plugins {
 description = "$rootProject.description documentation"
 javaModule.name = 'org.softcake.documentation'
 
+javadoc.enabled = false
+javadocJar.enabled = false
+sourceJar.enabled = false
+jar.enabled = false
+junitPlatformTest.enabled = false
+jacocoTestReport.enabled = false
 
-    dependencies {
-        implementation 'org.softcake.lemon:lemon-core:1.1.0'
-        testImplementation 'org.softcake.lemon:lemon-core:1.1.0'
-    }
+dependencies {
+    implementation 'org.softcake.lemon:lemon-core:1.1.0'
+    testImplementation 'org.softcake.lemon:lemon-core:1.1.0'
+}
 
 apply plugin: "se.bjurr.gitchangelog.git-changelog-gradle-plugin"
 
 task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
 
     file = new File("$buildDir/changelog/changelog.md");
-    templateContent = file("$rootDir/documentation/content/templates/changelog.mustache").getText('UTF-8');
+    templateContent = file("$rootDir/documentation/content/templates/changelog.mustache").getText('UTF-8')
     toRef = "refs/heads/master"
     dateFormat = "MM/dd/yyyy";
     timeZone = "UTC"

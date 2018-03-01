@@ -227,8 +227,6 @@ allprojects { subProject ->
                 junitXml.enabled = true
                 junitXml.destination(file('build/test-results/folder'))
             }
-
-
         }
 
         junitPlatformTest {
@@ -237,9 +235,7 @@ allprojects { subProject ->
                 append = false
                 destinationFile = file("$buildDir/jacoco/test.exec")
             }
-
         }
-
     }
 }
 
@@ -275,7 +271,7 @@ task aggregateJavadocs(type: Javadoc) {
     options.addStringOption('-module', moduleNames)
 
     options.addStringOption('-module-source-path', "$rootProject.buildDir/docscr/")
-    options.addStringOption( '-module-path', classpath.asPath)
+    options.addStringOption('-module-path', classpath.asPath)
     options.addStringOption('-html5')
     options.memberLevel = JavadocMemberLevel.PROTECTED
     options.author = true
@@ -291,7 +287,7 @@ task aggregateJavadocs(type: Javadoc) {
     )
 }
 
-project(":documentation"){
+project(":documentation") {
 
     apply plugin: 'org.asciidoctor.convert'
 
@@ -307,36 +303,36 @@ project(":documentation"){
         }
         backends = ['html5', 'pdf']
         inputs.dir files('src')
+
         //noinspection GroovyAssignabilityCheck
         attributes 'source-highlighter': 'highlightjs',
                 'highlightjs-theme': 'pojoaque',  //'solarized_light', 'monokai_sublime' railscasts, pojoaque, androidstudio
-                //'stylesheet': "$projectDir/src/docs/asciidoc/stylesheets/riak.css",
                 icons: 'font',
                 numbered: '',
                 idprefix: '',
                 'docinfo1': '',
-                sectanchors          : true,
-                sectlinks            : true,
-                linkattrs            : true,
-                encoding             : 'utf-8',
-                toc                  : 'left',
-                toclevels            : 2,
-                'toc-title'          : 'Contents',
-                //'testDir': project.sourceSets.test.java.srcDirs[0],
+                sectanchors: true,
+                sectlinks: true,
+                linkattrs: true,
+                encoding: 'utf-8',
+                toc: 'left',
+                toclevels: 2,
+                'toc-title': 'Contents',
                 'projectName': rootProject.description,
-                imagesdir            : 'images',
-                stylesheet           : "stylesheets/riak.css"
+                imagesdir: 'images',
+                stylesheet: "stylesheets/riak.css"
 
         attributes testDir: file("src/test/java")
         attributes mainDir: file("src/main/java")
         attributes changelogDir: file("build/changelog")
 
-    resources {
-        from rootProject.tasks.getByName('aggregateJavadocs') {
-            into 'api'
+        resources {
+            from rootProject.tasks.getByName('aggregateJavadocs') {
+                into 'api'
+            }
         }
-    }
 
     }
 }
+
 apply from: file('gradle/ghPages.gradle')

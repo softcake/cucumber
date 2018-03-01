@@ -52,10 +52,6 @@ task integrationTest(type: Test) {
     reports {
         junitXml.enabled = true
         html.enabled = false
-
-
-
-
     }
 
     if (project.plugins.hasPlugin(JacocoPlugin)) {
