@@ -21,3 +21,4 @@ gradle-app.setting
 *.log
 
 
+/documentation/content/changelog.md

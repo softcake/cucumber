@@ -1,7 +1,4 @@
-
-
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -16,24 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// Require Java 9 or higher
 
-int javaVersion = Integer.valueOf(JavaVersion.current().getMajorVersion())
-if (javaVersion < 9) {
-
-	throw new GradleException("The build requires Java 9 or higher. " +
-
-		"Currently executing with Java " + javaVersion + ".")
-
-}
-
-rootProject.name = "cucumber"
-
-include "documentation"
-include 'cucumber.actors'
-include 'cucumber.tale'
-include 'cucumber.bears'
-include 'cucumber.pigs'
-include 'cucumber.fairy'
-include 'cucumber.formula'
-
+/**
+ * @author The softcake Authors
+ */
+package example;

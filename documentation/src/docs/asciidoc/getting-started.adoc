@@ -1,0 +1,15 @@
+=== Getting Started
+
+Include dependencies to build.gradle:
+[source,java,indent=0]
+[subs="attributes"]
+.build.gradle
+----
+apply plugin: 'java'
+
+dependencies {
+
+    testCompile "org.softcake.lemon:lemon-core:{revnumber}"
+
+}
+----
