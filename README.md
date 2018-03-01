@@ -1,7 +1,7 @@
 # The cucumber Project.
 
 [![Bintray](https://img.shields.io/bintray/v/softcake/lemon/lemon-core.svg)](https://bintray.com/softcake/lemon)
-[![Maven Central](https://img.shields.io/maven-central/v/org.softcake.lemon/lemon-core.svg)](https://maven-badges.herokuapp.com/maven-central/org.softcake.lemon/lemon)
+[![Maven Central](https://img.shields.io/maven-central/v/org.softcake.lemon/lemon-core.svg)](https://maven-badges.herokuapp.com/maven-central/org.softcake.lemon/lemon-core)
 [![GitHub version](https://img.shields.io/github/tag/softcake/lemon.svg)](https://github.com/softcake/lemon)
 [![Travis](https://img.shields.io/travis/softcake/lemon.svg)](https://travis-ci.org/softcake/lemon)
 [![Codecov](https://img.shields.io/codecov/c/github/softcake/lemon.svg)](https://codecov.io/gh/softcake/lemon)

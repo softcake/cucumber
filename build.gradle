@@ -94,6 +94,8 @@ ext {
 
     sonarQubeModules = publishedModules
 
+    documentationModule = project(":documentation")
+
     publishArtifacts = false
     checkCodeQuality = true
     ignoreFailures = true
@@ -136,6 +138,26 @@ subprojects { subProject ->
         apply from: "$rootDir/gradle/artifactory.gradle"
         apply from: "$rootDir/gradle/code-quality.gradle"
 
+        // common dependencies
+        dependencies {
+            // JUnit Jupiter API and TestEngine implementation
+            testImplementation("org.junit.jupiter:junit-jupiter-api")
+            testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+            // To use Log4J's LogManager
+            testRuntimeOnly("org.apache.logging.log4j:log4j-core")
+            testRuntimeOnly("org.apache.logging.log4j:log4j-jul")
+
+            implementation "com.google.guava:guava"
+        }
+
+    }
+    if (subProject in documentationModule) {
+        apply plugin: "com.zyxist.chainsaw"
+        apply plugin: "org.junit.platform.gradle.plugin"
+        apply from: file("$rootDir/gradle/publishing.gradle")
+        apply from: "$rootDir/gradle/code-quality.gradle"
+        apply from: file("$rootDir/gradle/coverage.gradle")
         // common dependencies
         dependencies {
             // JUnit Jupiter API and TestEngine implementation
@@ -214,35 +236,6 @@ allprojects { subProject ->
 
     }
 }
-//
-//
-//apply plugin: "org.gradle.guides.tutorial"
-//
-//
-//
-//
-//guide {
-//    repoPath = 'softcake/cucumber'
-//    mainAuthor = 'Pepper Lebeck-Jobe'
-//}
-//
-//asciidoctor {
-//    inputs.dir files('src/cucumber.actors')
-//    attributes originaldir: file('src/cucumber.actors')
-////    attributes singledir: file('src/1-single-module')
-////    attributes alldir: file('src/2-all-modules')
-////    attributes appdir: file('src/3-application')
-////    attributes plugindir: file('src/4-plugin')
-//
-//
-//}
-//
-
-
-
-
-
-
 
 evaluationDependsOnChildren()
 task aggregateJavadocs(type: Javadoc) {
@@ -340,4 +333,4 @@ project(":documentation"){
 
     }
 }
-
+apply from: file('gradle/ghPages.gradle')

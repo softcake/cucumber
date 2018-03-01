@@ -18,28 +18,14 @@ plugins {
     id 'java-library'
 
 }
-apply plugin: "com.zyxist.chainsaw"
-apply plugin: "org.junit.platform.gradle.plugin"
+
 description = "$rootProject.description documentation"
 javaModule.name = 'org.softcake.documentation'
 
-    repositories {
-        jcenter()
-        mavenLocal()
-        mavenCentral()
-    }
 
     dependencies {
-        // JUnit Jupiter API and TestEngine implementation
-        testImplementation("org.junit.jupiter:junit-jupiter-api")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-
-        // To use Log4J's LogManager
-        testRuntimeOnly("org.apache.logging.log4j:log4j-core")
-        testRuntimeOnly("org.apache.logging.log4j:log4j-jul")
         implementation 'org.softcake.lemon:lemon-core:1.1.0'
         testImplementation 'org.softcake.lemon:lemon-core:1.1.0'
-        implementation "com.google.guava:guava"
     }
 
 apply plugin: "se.bjurr.gitchangelog.git-changelog-gradle-plugin"
