@@ -36,6 +36,6 @@ public final class Single {
     }
 
     private static final class InstanceHolder {
-        static final Single INSTANCE = new Single();
+        private static final Single INSTANCE = new Single();
     }
 }
