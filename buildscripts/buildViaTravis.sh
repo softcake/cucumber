@@ -12,7 +12,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_SECURE_ENV_VARS" == "true
 
 	strongEcho 'Build Branch ['$TRAVIS_BRANCH']'
 
-	./gradlew release sonarqube bintrayUpload artifactoryPublish\
+	./gradlew release sonarqube bintrayUpload artifactoryPublish publishGhPages\
 	-Dorg.ajoberstar.grgit.auth.username=${GH_TOKEN} \
 	-Dorg.ajoberstar.grgit.auth.password
 
