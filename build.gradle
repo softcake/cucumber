@@ -217,6 +217,7 @@ semanticRelease {
 
 
 allprojects { subProject ->
+
     if (subProject.plugins.hasPlugin(JavaPlugin)) {
         subProject.afterEvaluate {
             javadoc {
