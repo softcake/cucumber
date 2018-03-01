@@ -223,6 +223,12 @@ allprojects { subProject ->
             useJUnitPlatform {
             }
 
+            reports {
+                junitXml.enabled = true
+                junitXml.destination(file('build/test-results/folder'))
+            }
+
+
         }
 
         junitPlatformTest {

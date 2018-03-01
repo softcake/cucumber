@@ -46,4 +46,11 @@ public class ActorIntegTest {
         Actor actor = new DefaultActor("Kevin Costner");
         assertEquals("Kevin Costner", actor.toString());
     }
+    @Test
+    public void setNameActor() {
+        DefaultActor actor = new DefaultActor("Kevin Costner");
+        actor.setName("Hans");
+        assertEquals("Hans", actor.toString());
+    }
+
 }

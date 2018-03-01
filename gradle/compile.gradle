@@ -49,6 +49,7 @@ allprojects { subProject ->
 
             evaluatedProject.withType(Test) { task ->
                 task.testLogging.exceptionFormat = 'full'
+
             }
 
         }

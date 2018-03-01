@@ -34,6 +34,7 @@ sonarqube.properties {
 
     if (project.isPullRequest && project.hasTravisSecEnv) {
         property "sonar.analysis.mode", "preview"
+        property "sonar.issuesReport.html.enable", Boolean.TRUE
         property "sonar.github.pullRequest", System.getenv('TRAVIS_PULL_REQUEST')
         property "sonar.github.repository", System.getenv('TRAVIS_REPO_SLUG')
         property "sonar.github.oauth", System.getenv('SONAR_GITHUB_OAUTH')
@@ -46,12 +47,14 @@ subprojects {project ->
    sonarqube.skipProject = !(project in rootProject.sonarQubeModules) || !project.isValidBranch
 
     sonarqube.properties {
-        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.jacoco.reportPaths", ["${project.buildDir}/jacoco/test.exec"]
         property "sonar.sources", "src/main/java"
         property "sonar.java.binaries", "${project.buildDir}/classes"
-        property "sonar.junit.reportsPaths", "${project.buildDir}/test-results/junit-platform"
+        //TODO Currently not working! Hardcoded in server
+        //property "sonar.junit.reportsPaths",  ["${project.buildDir}/test-results/junit-platform", "${project.buildDir}/test-results/integrationTest"]
+
         if (project in rootProject.integTestModules) {
-            property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integrationTest.exec"
+            properties["sonar.jacoco.reportPaths"] += "${project.buildDir}/jacoco/integrationTest.exec"
             if (sourceSets.integrationTest.allSource.getSrcDirs() != null) {
                 properties["sonar.tests"] += sourceSets.integrationTest.allJava.getSrcDirs()
             }
