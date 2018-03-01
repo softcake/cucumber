@@ -28,6 +28,8 @@ sourceJar.enabled = false
 jar.enabled = false
 junitPlatformTest.enabled = false
 jacocoTestReport.enabled = false
+tasks.remove(uploadArchives)
+uploadArchives.enabled = false
 
 dependencies {
     implementation 'org.softcake.lemon:lemon-core:1.1.0'
