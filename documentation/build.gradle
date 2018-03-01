@@ -21,7 +21,7 @@ plugins {
 
 description = "$rootProject.description documentation"
 javaModule.name = 'org.softcake.documentation'
-
+jar.enabled = false
 javadoc.enabled = false
 junitPlatformTest.enabled = false
 
@@ -39,7 +39,7 @@ task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
 
     file = new File("$buildDir/changelog/changelog.md");
     templateContent = file("$rootDir/documentation/content/templates/changelog.mustache").getText('UTF-8')
-    toRef = "refs/heads/HEAD"
+    toRef = "HEAD"
     dateFormat = "MM/dd/yyyy";
     timeZone = "UTC"
     untaggedName = 'Next release'
