@@ -23,11 +23,8 @@ description = "$rootProject.description documentation"
 javaModule.name = 'org.softcake.documentation'
 
 javadoc.enabled = false
-javadocJar.enabled = false
-sourceJar.enabled = false
-jar.enabled = false
 junitPlatformTest.enabled = false
-jacocoTestReport.enabled = false
+
 tasks.remove(uploadArchives)
 uploadArchives.enabled = false
 
@@ -42,7 +39,7 @@ task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
 
     file = new File("$buildDir/changelog/changelog.md");
     templateContent = file("$rootDir/documentation/content/templates/changelog.mustache").getText('UTF-8')
-    toRef = "refs/heads/master"
+    //toRef = "refs/heads/master"
     dateFormat = "MM/dd/yyyy";
     timeZone = "UTC"
     untaggedName = 'Next release'
