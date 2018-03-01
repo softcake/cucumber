@@ -21,7 +21,7 @@ plugins {
 
 description = "$rootProject.description documentation"
 javaModule.name = 'org.softcake.documentation'
-jar.enabled = false
+
 javadoc.enabled = false
 junitPlatformTest.enabled = false
 
