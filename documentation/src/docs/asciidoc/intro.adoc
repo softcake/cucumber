@@ -1,8 +1,0 @@
-== Introduction
-
-
-=== Benefits of Project
-
-This project provides a collection of test tools for unit testing.
-
-include::getting-started.adoc[]

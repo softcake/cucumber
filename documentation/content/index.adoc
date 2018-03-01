@@ -94,15 +94,10 @@ include::{testDir}/example/DemoTest.java[tags=exampleLemon2]
 IMPORTANT: It is not possible to test nested classes, if constructor of the enclosing class throws an exception on instantiating!
 
 
-
-
-//include::examples.adoc[]
-
 == Change Log
 
-[discrete]
-=== v1.0.0
-include::changelog.md[]
+include::{changelogDir}/changelog.md[]
+
 == About This Project
 
 

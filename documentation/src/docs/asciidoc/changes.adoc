@@ -1,4 +1,0 @@
-== Change Log
-
-[discrete]
-=== v1.0.0
