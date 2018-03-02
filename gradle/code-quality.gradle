@@ -14,25 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+allprojects { subProject ->
 
-def configDir = new File("${rootDir}", 'config')
-def qualityGroup = "Code Quality"
+    if (subProject in publishedModules) {
+        def configDir = new File("${rootDir}", 'config')
+        def qualityGroup = "Code Quality"
 
-apply plugin: 'checkstyle'
-def checkstyleConfigDir = "$configDir/checkstyle"
+        apply plugin: 'checkstyle'
+        def checkstyleConfigDir = "$configDir/checkstyle"
 
-checkstyle {
-    ignoreFailures = project.ignoreFailures
-    configFile = new File(checkstyleConfigDir, "softcake_checks.xml")
-    configProperties = [ "basedir" :new File(checkstyleConfigDir, "softcake_suppressions.xml")]
-    toolVersion = '8.8'
-}
+        checkstyle {
+            ignoreFailures = project.ignoreFailures
+            configFile = new File(checkstyleConfigDir, "softcake_checks.xml")
+            configProperties = ["basedir": new File(checkstyleConfigDir, "softcake_suppressions.xml")]
+            toolVersion = '8.8'
+        }
 
-tasks.withType(Checkstyle) {
-    enabled = checkCodeQuality
-    group = qualityGroup
-    reports {
-        xml.enabled = false
-        html.enabled = !project.isCi
+        tasks.withType(Checkstyle) {
+            enabled = checkCodeQuality
+            group = qualityGroup
+            reports {
+                xml.enabled = false
+                html.enabled = !project.isCi
+            }
+        }
     }
 }

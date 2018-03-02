@@ -18,8 +18,7 @@ package org.softcake.cucumber.actors.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.softcake.cucumber.actors.Actor;
-import org.softcake.cucumber.actors.Imagination;
+
 
 import org.junit.jupiter.api.Test;
 

@@ -108,6 +108,10 @@ apply from: file("gradle/compile.gradle")
 apply from: file("gradle/properties.gradle")
 apply from: file("gradle/idea/idea.gradle")
 apply from: file("gradle/sonarqube.gradle")
+apply from: file("gradle/publishing.gradle")
+apply from: file("gradle/bintray.gradle")
+apply from: file("gradle/artifactory.gradle")
+apply from: file("gradle/code-quality.gradle")
 
 allprojects {
     apply plugin: "io.spring.dependency-management"
@@ -126,15 +130,11 @@ allprojects {
 
 }
 
-apply from: file("$rootDir/gradle/publishing.gradle")
+
+
 subprojects { subProject ->
 
     if (subProject in publishedModules) {
-
-
-        apply from: "$rootDir/gradle/bintray.gradle"
-        apply from: "$rootDir/gradle/artifactory.gradle"
-        apply from: "$rootDir/gradle/code-quality.gradle"
 
         // common dependencies
         dependencies {
@@ -149,7 +149,7 @@ subprojects { subProject ->
             implementation "com.google.guava:guava"
         }
 
-    }else {
+    } else {
 
         jar.enabled = false
         javadoc.enabled = false
