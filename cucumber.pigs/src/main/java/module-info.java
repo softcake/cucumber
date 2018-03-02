@@ -1,5 +1,5 @@
 module org.softcake.cucumber.fairy.tale.pigs {
-    requires org.softcake.cucumber.actors.api;
+    requires org.softcake.cucumber.actors;
     requires transitive  org.softcake.cucumber.fairy.tale;
     requires org.softcake.cucumber.fairy.tale.formula;
 

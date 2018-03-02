@@ -107,10 +107,11 @@ apply plugin: "idea"
 apply plugin: "net.nemerosa.versioning"
 apply plugin: "de.gliderpilot.semantic-release"
 apply from: file("gradle/credentials.gradle")
-apply from: file("gradle/compile.gradle")
+//apply from: file("gradle/compile.gradle")
 apply from: file("gradle/properties.gradle")
 apply from: file("gradle/idea/idea.gradle")
 apply from: file("gradle/sonarqube.gradle")
+
 
 allprojects {
     apply plugin: "io.spring.dependency-management"
@@ -155,9 +156,6 @@ subprojects { subProject ->
     if (subProject in documentationModule) {
         apply plugin: "com.zyxist.chainsaw"
         apply plugin: "org.junit.platform.gradle.plugin"
-        //apply from: file("$rootDir/gradle/publishing.gradle")
-        //apply from: "$rootDir/gradle/code-quality.gradle"
-        //apply from: file("$rootDir/gradle/coverage.gradle")
         // common dependencies
         dependencies {
             // JUnit Jupiter API and TestEngine implementation
@@ -192,7 +190,7 @@ subprojects { subProject ->
     }
 
 }
-
+apply from: file("gradle/compile.gradle")
 private List<Project> getPublishedProjects() {
     List<Project> publishedModules = []
     subprojects.each { project ->
@@ -215,56 +213,6 @@ semanticRelease {
     }
 }
 
-
-allprojects { subProject ->
-
-    if (subProject.plugins.hasPlugin(JavaPlugin)) {
-        subProject.afterEvaluate {
-            javadoc {
-                inputs.property("moduleName", javaModule.name)
-
-                doFirst {
-
-                    options.addStringOption('-module-path', classpath.asPath)
-
-                }
-
-                afterEvaluate {
-                    options.header = "${project.description} of ${rootProject.description}."
-                }
-                options.memberLevel = JavadocMemberLevel.PROTECTED
-                options.author = true
-                options.header = project.name
-                options.addStringOption('Xdoclint:html,syntax', '-quiet')
-                options.addMultilineStringsOption('tag').setValue(['apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:', 'implNote:a:Implementation Note:'])
-                options.encoding = 'UTF-8'
-                options.links('http://docs.oracle.com/javase/9/docs/api/',
-                        'http://google.github.io/guava/releases/21.0/api/docs/')
-            }
-        }
-
-        test {
-            useJUnitPlatform {
-            }
-
-            reports {
-                junitXml.enabled = true
-                junitXml.destination(file('build/test-results/folder'))
-            }
-        }
-
-        junitPlatformTest {
-            if (project.plugins.hasPlugin(JacocoPlugin)) {
-
-                jacoco {
-                    append = false
-                    destinationFile = file("$buildDir/jacoco/test.exec")
-                }
-            }
-
-        }
-    }
-}
 
 evaluationDependsOnChildren()
 task aggregateJavadocs(type: Javadoc) {

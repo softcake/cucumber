@@ -20,7 +20,7 @@ plugins {
 }
 
 description = "$rootProject.description documentation"
-javaModule.name = 'org.softcake.documentation'
+javaModule.name = 'org.softcake.cucumber.documentation.example'
 
 javadoc.enabled = false
 junitPlatformTest.enabled = false

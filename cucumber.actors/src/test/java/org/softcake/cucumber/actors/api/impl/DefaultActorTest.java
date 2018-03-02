@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-/**
- * @author The softcake Authors
- */
-package example;
+package org.softcake.cucumber.actors.api.impl;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+class DefaultActorTest {
+
+    @Test
+    void getLastName() {
+        DefaultActor actor = new DefaultActor("Kevin", "Costner");
+        assertEquals("Costner", actor.getLastName());
+    }
+}

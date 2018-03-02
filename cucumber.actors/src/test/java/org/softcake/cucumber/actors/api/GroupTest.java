@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,10 +14,14 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors;
+package org.softcake.cucumber.actors.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.softcake.cucumber.actors.Actor;
+import org.softcake.cucumber.actors.Group;
+import org.softcake.cucumber.actors.Imagination;
 
 import org.junit.jupiter.api.Test;
 

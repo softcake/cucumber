@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,31 +14,22 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors;
+package org.softcake.cucumber.actors.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.softcake.cucumber.actors.impl.DefaultActor;
+import org.softcake.cucumber.actors.Actor;
+import org.softcake.cucumber.actors.Imagination;
 
 import org.junit.jupiter.api.Test;
 
-public class ActorTest {
-    private static final String NAME = "Sean Connery";
-    private static final Actor SEAN = Imagination.createActor(NAME);
+
+class ImaginationTest {
 
     @Test
-    public void nameMatches() {
-        assertEquals(NAME, SEAN.name());
-    }
+    void createActor() {
 
-    @Test
-    public void accurateToString() {
-        assertEquals(NAME, SEAN.toString());
-    }
-
-    @Test
-    public void canReachDefaultActor() {
-        Actor actor = new DefaultActor("Kevin Costner");
-        assertEquals("Kevin Costner", actor.toString());
+        Actor actor = Imagination.createActor("Sean");
+        assertEquals("Sean", actor.toString());
     }
 }
