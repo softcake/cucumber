@@ -1,5 +1,5 @@
-org.softcake.cucumber.actors
-org.softcake.cucumber.actors.impl
+org.softcake.cucumber.actors.api
+org.softcake.cucumber.actors.api.impl
 org.softcake.cucumber.fairy.tale
 org.softcake.cucumber.fairy.tale.bears
 org.softcake.cucumber.fairy.tale.formula

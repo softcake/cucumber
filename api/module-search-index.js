@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"org.softcake.cucumber.actors.api"},{"l":"org.softcake.cucumber.fairy.app"},{"l":"org.softcake.cucumber.fairy.tale"},{"l":"org.softcake.cucumber.fairy.tale.bears"},{"l":"org.softcake.cucumber.fairy.tale.formula"},{"l":"org.softcake.cucumber.fairy.tale.pigs"}]
+moduleSearchIndex = [{"l":"org.softcake.cucumber.actors"},{"l":"org.softcake.cucumber.fairy.app"},{"l":"org.softcake.cucumber.fairy.tale"},{"l":"org.softcake.cucumber.fairy.tale.bears"},{"l":"org.softcake.cucumber.fairy.tale.formula"},{"l":"org.softcake.cucumber.fairy.tale.pigs"}]
