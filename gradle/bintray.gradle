@@ -73,7 +73,7 @@ allprojects { subProject ->
                     }
 
                     mavenCentralSync {
-                        sync = true
+                        sync = false
                         def ossUser = project.sonatypeOssUsername
                         def ossPass = project.sonatypeOssPassword
                         user = ossUser
