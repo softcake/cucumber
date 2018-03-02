@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,7 +14,25 @@
  * limitations under the License.
  */
 
+package org.softcake.cucumber.documentation.example;
+
+// tag::exampleDemo[]
 /**
- * @author The softcake Authors.
+ * Demo class
  */
-package org.softcake.cucumber.actors;
+public final class Demo {
+
+    private Demo() {
+
+        throw new IllegalStateException("No instances!");
+    }
+
+    public static void checkNotNull(final Object obj) {
+
+        if (obj == null) {
+            throw new IllegalArgumentException("Parameter must not be null!");
+        }
+    }
+
+}
+// end::exampleDemo[]

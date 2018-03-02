@@ -1,5 +1,6 @@
+
 /*
- * Copyright 2017 softcake.org.
+ * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * you may not use this file except in compliance with the License.
@@ -14,25 +15,29 @@
  * limitations under the License.
  */
 
-package example;
+package org.softcake.cucumber.documentation.example;
 
-// tag::exampleDemo[]
+// tag::exampleDemoEnclosing[]
 /**
- * Demo class
+ * enclosing class
  */
-public final class Demo {
+public final class EnclosingClass {
 
-    private Demo() {
-
-        throw new IllegalStateException("No instances!");
+    private EnclosingClass() {
     }
 
-    public static void checkNotNull(final Object obj) {
+    //some methods
 
-        if (obj == null) {
-            throw new IllegalArgumentException("Parameter must not be null!");
+    /**
+     * non static nested class
+     */
+    private final class NestedClass {
+
+        private NestedClass() {
+            throw new IllegalStateException("No instances!");
         }
-    }
 
+        //some methods
+    }
 }
-// end::exampleDemo[]
+// end::exampleDemoEnclosing[]

@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,11 +14,12 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors;
+package org.softcake.cucumber.actors.api;
 
-import org.softcake.cucumber.actors.impl.DefaultActor;
-import org.softcake.cucumber.actors.impl.DefaultGroup;
+import org.softcake.cucumber.actors.api.impl.DefaultActor;
+import org.softcake.cucumber.actors.api.impl.DefaultGroup;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 
 /**
@@ -31,13 +31,20 @@ public final class Imagination {
 
     /**
      * Creates and returns an {@link Actor} with the given <code>name</code>.
+     *
+     * @param name the Name
      */
     public static Actor createActor(final String name) {
+
+        Preconditions.checkNotNull(name);
         return new DefaultActor(name);
     }
 
     /**
      * Creates a {@link Group} with the given <code>name</code> containing the <code>actors</code>
+     *
+     * @param name the Name
+     * @param actors the Actors
      */
     public static Group createGroup(final String name, final Actor... actors) {
         return new DefaultGroup(name, ImmutableSet.copyOf(actors));

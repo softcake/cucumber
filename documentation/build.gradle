@@ -20,13 +20,13 @@ plugins {
 }
 
 description = "$rootProject.description documentation"
-javaModule.name = 'org.softcake.documentation'
+javaModule.name = 'org.softcake.cucumber.documentation'
 
-javadoc.enabled = false
-junitPlatformTest.enabled = false
 
-tasks.remove(uploadArchives)
-uploadArchives.enabled = false
+
+
+
+
 
 dependencies {
     implementation 'org.softcake.lemon:lemon-core:1.1.0'
@@ -46,3 +46,51 @@ task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
 }
 
 
+apply plugin: 'org.asciidoctor.convert'
+
+asciidoctorj {
+    version = '1.5.4'
+}
+
+rootProject.afterEvaluate {
+    asciidoctor {
+        dependsOn tasks.getByName("gitChangelogTask")
+        sourceDir "content"
+        //outputDir { project.buildDir }
+        sources {
+            include 'index.adoc'
+        }
+        backends = ['html5'] //['html5', 'pdf']
+        inputs.dir files('src')
+
+        //noinspection GroovyAssignabilityCheck
+        attributes 'source-highlighter': 'highlightjs',
+                'highlightjs-theme': 'pojoaque',  //'solarized_light', 'monokai_sublime' railscasts, pojoaque, androidstudio
+                icons: 'font',
+                numbered: '',
+                idprefix: '',
+                'docinfo1': '',
+                sectanchors: true,
+                sectlinks: true,
+                linkattrs: true,
+                encoding: 'utf-8',
+                toc: 'left',
+                toclevels: 2,
+                'toc-title': 'Contents',
+                'projectName': rootProject.description,
+                imagesdir: 'images',
+                stylesheet: "stylesheets/riak.css"
+
+        attributes testDir: file("src/test/java")
+        attributes mainDir: file("src/main/java")
+        attributes changelogDir: file("build/changelog")
+
+        resources {
+            from rootProject.tasks.getByName('aggregateJavadocs') {
+                into 'api'
+            }
+        }
+
+    }
+
+}

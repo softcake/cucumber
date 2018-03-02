@@ -1,6 +1,5 @@
-
 /*
- * Copyright 2017 softcake.org.
+ * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * you may not use this file except in compliance with the License.
@@ -15,29 +14,19 @@
  * limitations under the License.
  */
 
-package example;
+package org.softcake.cucumber.actors.api;
 
-// tag::exampleDemoEnclosing[]
-/**
- * enclosing class
- */
-public final class EnclosingClass {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    private EnclosingClass() {
-    }
+import org.junit.jupiter.api.Test;
 
-    //some methods
 
-    /**
-     * non static nested class
-     */
-    private final class NestedClass {
+class ImaginationTest {
 
-        private NestedClass() {
-            throw new IllegalStateException("No instances!");
-        }
+    @Test
+    void createActor() {
 
-        //some methods
+        Actor actor = Imagination.createActor("Sean");
+        assertEquals("Sean", actor.toString());
     }
 }
-// end::exampleDemoEnclosing[]

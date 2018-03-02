@@ -19,8 +19,8 @@ package org.softcake.cucumber.fairy.tale.formula;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.softcake.cucumber.actors.Actor;
-import org.softcake.cucumber.actors.Imagination;
+import org.softcake.cucumber.actors.api.Actor;
+import org.softcake.cucumber.actors.api.Imagination;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ public class ModularityTest {
     public void canDynamicallyReachDefaultActor() throws Exception {
         Class clazz = ModularityTest
             .class.getClassLoader()
-                  .loadClass("org.softcake.cucumber.actors.impl.DefaultActor");
+                  .loadClass("org.softcake.cucumber.actors.api.impl.DefaultActor");
         Actor actor = (Actor) clazz.getConstructor(String.class)
                                    .newInstance("Kevin Costner");
         assertEquals("Kevin Costner", actor.toString());

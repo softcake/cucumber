@@ -14,28 +14,7 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors.impl;
-
 /**
- * .
- * @author René Neubert
+ * @author The softcake Authors
  */
-public final class Single {
-
-    private Single() {
-        throw new IllegalStateException("No instances!");
-    }
-
-    /**
-     * Lazy  initialization, where the instance is created when this static method is first invoked.
-     *
-     * @return the instance of this Singleton class.
-     */
-    public static Single getInstance() {
-        return InstanceHolder.INSTANCE;
-    }
-
-    private static final class InstanceHolder {
-        private static final Single INSTANCE = new Single();
-    }
-}
+package org.softcake.cucumber.documentation.example;

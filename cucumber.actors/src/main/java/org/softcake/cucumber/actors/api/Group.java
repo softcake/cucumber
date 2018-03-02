@@ -14,7 +14,19 @@
  * limitations under the License.
  */
 
+package org.softcake.cucumber.actors.api;
+
+import java.util.Set;
+
 /**
- * @author The softcake Authors
+ * Represents some {@link Actor}s.
+ *
+ *  @author The softcake Authors.
  */
-package example;
+public interface Group extends Set<Actor>, Actor {
+    /**
+     * .
+     * @return  the size of the {@link Group}
+     */
+    int size();
+}

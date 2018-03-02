@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,19 +14,7 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
-
-
-class ImaginationTest {
-
-    @Test
-    void createActor() {
-
-        Actor actor = Imagination.createActor("Sean");
-        assertEquals("Sean", actor.toString());
-    }
-}
+/**
+ * @author The softcake Authors.
+ */
+package org.softcake.cucumber.actors.api;

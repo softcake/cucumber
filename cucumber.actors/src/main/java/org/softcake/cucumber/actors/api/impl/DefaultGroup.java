@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors.impl;
+package org.softcake.cucumber.actors.api.impl;
 
-import org.softcake.cucumber.actors.Actor;
-import org.softcake.cucumber.actors.Group;
+import org.softcake.cucumber.actors.api.Actor;
+import org.softcake.cucumber.actors.api.Group;
 
 import com.google.common.collect.ImmutableSet;
 

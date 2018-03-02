@@ -23,7 +23,7 @@ plugins {
 // end::plugins[]
 
 // tag::moduleName[]
-javaModule.name = 'org.softcake.cucumber.actors.api'  // <1>
+javaModule.name = 'org.softcake.cucumber.actors'  // <1>
 description = "The Actors"
 // end::moduleName[]
 
