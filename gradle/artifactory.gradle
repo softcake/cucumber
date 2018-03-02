@@ -14,40 +14,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+allprojects { subProject ->
 
-apply plugin: 'com.jfrog.artifactory'
+    if (subProject in publishedModules) {
+        apply plugin: 'com.jfrog.artifactory'
 
-artifactoryPublish {
+        artifactoryPublish {
 
-    onlyIf {
-        project.publishArtifacts && !project.isPullRequest && project.hasTravisSecEnv && project.isValidBranch
+            onlyIf {
+                project.publishArtifacts && !project.isPullRequest && project.hasTravisSecEnv && project.isValidBranch
+            }
+            dependsOn jar, sourceJar, javadocJar
+        }
+
+        artifactory {
+            contextUrl = 'http://oss.jfrog.org/artifactory'
+
+            publish {
+
+                repository {
+                    repoKey = project.isSnapshot ? 'oss-snapshot-local' : 'oss-release-local'
+                    username = project.bintrayUser
+                    password = project.bintrayKey
+                }
+
+
+                defaults {
+                    publications('nebula')
+                }
+            }
+
+            resolve {
+                repository {
+                    repoKey = project.isSnapshot ? 'libs-snapshot' : 'libs-release'
+                    username = project.bintrayUser
+                    password = project.bintrayKey
+                }
+            }
+        }
+
     }
-    dependsOn jar, sourceJar, javadocJar
 }
-
-artifactory {
-    contextUrl = 'http://oss.jfrog.org/artifactory'
-
-    publish {
-
-        repository {
-            repoKey = project.isSnapshot ? 'oss-snapshot-local' : 'oss-release-local'
-            username = project.bintrayUser
-            password = project.bintrayKey
-        }
-
-
-        defaults {
-            publications('nebula')
-        }
-    }
-
-    resolve {
-        repository {
-            repoKey = project.isSnapshot ? 'libs-snapshot' : 'libs-release'
-            username = project.bintrayUser
-            password = project.bintrayKey
-        }
-    }
-}
-

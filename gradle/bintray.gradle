@@ -27,62 +27,65 @@ buildscript {
         classpath 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
     }
 }
+allprojects { subProject ->
 
-apply plugin: 'com.jfrog.bintray'
+    if (subProject in publishedModules) {
+        apply plugin: 'com.jfrog.bintray'
 
-bintrayUpload {
-    doFirst {
-        createBintrayRepository(rootProject.name, project)
-    }
-    onlyIf {
-        project.publishArtifacts && !project.isSnapshot && project.hasTravisSecEnv && project.isValidBranch
-    }
-}
+        bintrayUpload {
+            doFirst {
+                createBintrayRepository(rootProject.name, project)
+            }
+            onlyIf {
+                project.publishArtifacts && !project.isSnapshot && project.hasTravisSecEnv && project.isValidBranch
+            }
+        }
 
 //noinspection GroovyAssignabilityCheck
-bintray {
+        bintray {
 
-    user = project.bintrayUser
-    key = project.bintrayKey
-    dryRun = project.isSnapshot
-    publish = true
-    publications = ['nebula']
+            user = project.bintrayUser
+            key = project.bintrayKey
+            dryRun = project.isSnapshot
+            publish = true
+            publications = ['nebula']
 
-    pkg {
+            pkg {
 
-        repo = rootProject.name
-        name = project.name
-        userOrg = project.bintrayUserOrg
-        desc = description
-        labels = ['softcake', 'lemon', 'java']
-        publicDownloadNumbers = true
-        licenses = ['Apache-2.0']
+                repo = rootProject.name
+                name = project.name
+                userOrg = project.bintrayUserOrg
+                desc = description
+                labels = ['softcake', 'lemon', 'java']
+                publicDownloadNumbers = true
+                licenses = ['Apache-2.0']
 
 
-        version {
+                version {
 
-            released = new Date()
-            name = project.version.toString()
-            vcsTag = project.version.toString()
-            attributes = ['softcake': [project.group, project.name].join(':')]
+                    released = new Date()
+                    name = project.version.toString()
+                    vcsTag = project.version.toString()
+                    attributes = ['softcake': [project.group, project.name].join(':')]
 
-            gpg {
-                sign = true
-            }
+                    gpg {
+                        sign = true
+                    }
 
-            mavenCentralSync {
-                sync = true
-                def ossUser = project.sonatypeOssUsername
-                def ossPass = project.sonatypeOssPassword
-                user = ossUser
-                password = ossPass
-                close = '1'
+                    mavenCentralSync {
+                        sync = false
+                        def ossUser = project.sonatypeOssUsername
+                        def ossPass = project.sonatypeOssPassword
+                        user = ossUser
+                        password = ossPass
+                        close = '1'
 
+                    }
+                }
             }
         }
     }
 }
-
 /**
  * Create a Bintray repository.
  *

@@ -1,6 +1,5 @@
-
 /*
- * Copyright 2017 softcake.org.
+ * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * you may not use this file except in compliance with the License.
@@ -15,29 +14,7 @@
  * limitations under the License.
  */
 
-package example;
-
-// tag::exampleDemoEnclosing[]
 /**
- * enclosing class
+ * @author The softcake Authors.
  */
-public final class EnclosingClass {
-
-    private EnclosingClass() {
-    }
-
-    //some methods
-
-    /**
-     * non static nested class
-     */
-    private final class NestedClass {
-
-        private NestedClass() {
-            throw new IllegalStateException("No instances!");
-        }
-
-        //some methods
-    }
-}
-// end::exampleDemoEnclosing[]
+package org.softcake.cucumber.actors.api;

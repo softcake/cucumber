@@ -54,7 +54,7 @@ For example you have such class with private constructor:
 .Demo class example
 [source,java]
 ----
-include::{mainDir}/example/Demo.java[tags=exampleDemo]
+include::{mainDir}/org/softcake/cucumber/documentation/example/Demo.java[tags=exampleDemo]
 ----
 
 We need reflection to access the private Constructor.
@@ -62,7 +62,7 @@ We need reflection to access the private Constructor.
 .Test with reflection
 [source,java,indent=0]
 ----
-include::{testDir}/example/DemoTest.java[tags=exampleReflection]
+include::{testDir}/org/softcake/cucumber/documentation/example/DemoTest.java[tags=exampleReflection]
 ----
 
 
@@ -71,7 +71,7 @@ Solution to avoid this boilerplate:
 .PrivateConstructorTester
 [source,java,indent=0]
 ----
-include::{testDir}/example/DemoTest.java[tags=exampleLemon1]
+include::{testDir}/org/softcake/cucumber/documentation/example/DemoTest.java[tags=exampleLemon1]
 ----
 
 To check nested classes, you must provide an Instance of enclosing class.
@@ -80,7 +80,7 @@ See this example:
 .Nested class example
 [source,java,indent=0]
 ----
-include::{mainDir}/example/EnclosingClass.java[tags=exampleDemoEnclosing]
+include::{mainDir}/org/softcake/cucumber/documentation/example/EnclosingClass.java[tags=exampleDemoEnclosing]
 ----
 
 And the solution:
@@ -88,7 +88,7 @@ And the solution:
 .PrivateConstructorTester and TestUtils
 [source,java,indent=0]
 ----
-include::{testDir}/example/DemoTest.java[tags=exampleLemon2]
+include::{testDir}/org/softcake/cucumber/documentation/example/DemoTest.java[tags=exampleLemon2]
 ----
 
 IMPORTANT: It is not possible to test nested classes, if constructor of the enclosing class throws an exception on instantiating!

@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,19 +14,28 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors;
-
-import java.util.Set;
+package org.softcake.cucumber.actors.api.impl;
 
 /**
- * Represents some {@link Actor}s.
- *
- *  @author The softcake Authors.
+ * .
+ * @author René Neubert
  */
-public interface Group extends Set<Actor>, Actor {
+public final class Single {
+
+    private Single() {
+        throw new IllegalStateException("No instances!");
+    }
+
     /**
-     * .
-     * @return  the size of the {@link Group}
+     * Lazy  initialization, where the instance is created when this static method is first invoked.
+     *
+     * @return the instance of this Singleton class.
      */
-    int size();
+    public static Single getInstance() {
+        return InstanceHolder.INSTANCE;
+    }
+
+    private static final class InstanceHolder {
+        private static final Single INSTANCE = new Single();
+    }
 }

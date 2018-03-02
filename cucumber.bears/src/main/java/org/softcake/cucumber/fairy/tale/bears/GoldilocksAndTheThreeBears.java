@@ -17,8 +17,8 @@
 
 package org.softcake.cucumber.fairy.tale.bears;
 
-import org.softcake.cucumber.actors.Actor;
-import org.softcake.cucumber.actors.Imagination;
+import org.softcake.cucumber.actors.api.Actor;
+import org.softcake.cucumber.actors.api.Imagination;
 import org.softcake.cucumber.fairy.tale.Tale;
 import org.softcake.cucumber.fairy.tale.formula.FairyTale;
 

@@ -29,11 +29,15 @@ task wrapper(type: Wrapper) {
 
 }
 
-allprojects { subProject ->
+subprojects { subProject ->
+    apply plugin: "com.zyxist.chainsaw"
+    apply plugin: "org.junit.platform.gradle.plugin"
     if (subProject.plugins.hasPlugin(JavaPlugin)) {
 
 
+
         ext.javacRelease = rootProject.javacRelease
+
 
 
         subProject.afterEvaluate { evaluatedProject ->
@@ -47,8 +51,44 @@ allprojects { subProject ->
 
             }
 
-            evaluatedProject.withType(Test) { task ->
-                task.testLogging.exceptionFormat = 'full'
+            javadoc {
+
+                options.addStringOption('-module-path', classpath.asPath)
+
+
+
+                afterEvaluate {
+                    options.header = "${project.description} of ${rootProject.description}."
+                }
+                options.memberLevel = JavadocMemberLevel.PROTECTED
+                options.author = true
+                options.header = project.name
+                options.addStringOption('Xdoclint:html,syntax', '-quiet')
+                options.addMultilineStringsOption('tag').setValue(['apiNote:a:API Note:', 'implSpec:a:Implementation Requirements:', 'implNote:a:Implementation Note:'])
+                options.encoding = 'UTF-8'
+                options.links('http://docs.oracle.com/javase/9/docs/api/',
+                        'http://google.github.io/guava/releases/21.0/api/docs/')
+            }
+
+
+            test {
+                useJUnitPlatform {
+                }
+                testLogging.exceptionFormat = 'full'
+                reports {
+                    junitXml.enabled = true
+                    junitXml.destination(file('build/test-results/folder'))
+                }
+            }
+
+            junitPlatformTest {
+                if (project.plugins.hasPlugin(JacocoPlugin)) {
+
+                    jacoco {
+                        append = false
+                        destinationFile = file("$buildDir/jacoco/test.exec")
+                    }
+                }
 
             }
 

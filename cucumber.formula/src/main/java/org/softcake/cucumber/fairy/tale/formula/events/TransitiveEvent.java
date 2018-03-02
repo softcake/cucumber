@@ -17,7 +17,7 @@
 
 package org.softcake.cucumber.fairy.tale.formula.events;
 
-import org.softcake.cucumber.actors.Actor;
+import org.softcake.cucumber.actors.api.Actor;
 
 /**
  * Something some actor did to some other actor.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 softcake.org.
+ * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-package example;
+package org.softcake.cucumber.actors.api;
 
-// tag::exampleDemo[]
-/**
- * Demo class
- */
-public final class Demo {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    private Demo() {
 
-        throw new IllegalStateException("No instances!");
+
+import org.junit.jupiter.api.Test;
+
+
+class ImaginationTest {
+
+    @Test
+    void createActor() {
+
+        Actor actor = Imagination.createActor("Sean");
+        assertEquals("Sean", actor.toString());
     }
-
-    public static void checkNotNull(final Object obj) {
-
-        if (obj == null) {
-            throw new IllegalArgumentException("Parameter must not be null!");
-        }
-    }
-
 }
-// end::exampleDemo[]

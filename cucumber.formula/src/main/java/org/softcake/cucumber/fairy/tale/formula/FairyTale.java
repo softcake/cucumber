@@ -17,8 +17,8 @@
 
 package org.softcake.cucumber.fairy.tale.formula;
 
-import org.softcake.cucumber.actors.Actor;
-import org.softcake.cucumber.actors.Group;
+import org.softcake.cucumber.actors.api.Actor;
+import org.softcake.cucumber.actors.api.Group;
 import org.softcake.cucumber.fairy.tale.Tale;
 import org.softcake.cucumber.fairy.tale.formula.events.Event;
 import org.softcake.cucumber.fairy.tale.formula.events.IntransativeEvent;

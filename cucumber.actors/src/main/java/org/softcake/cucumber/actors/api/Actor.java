@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2018 softcake.org.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
@@ -15,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors;
+package org.softcake.cucumber.actors.api;
 
 /**
  * .

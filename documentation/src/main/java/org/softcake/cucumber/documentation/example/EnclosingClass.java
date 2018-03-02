@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2018 softcake.org.
  *
@@ -14,28 +15,29 @@
  * limitations under the License.
  */
 
-package org.softcake.cucumber.actors.impl;
+package org.softcake.cucumber.documentation.example;
 
+// tag::exampleDemoEnclosing[]
 /**
- * .
- * @author René Neubert
+ * enclosing class
  */
-public final class Single {
+public final class EnclosingClass {
 
-    private Single() {
-        throw new IllegalStateException("No instances!");
+    private EnclosingClass() {
     }
+
+    //some methods
 
     /**
-     * Lazy  initialization, where the instance is created when this static method is first invoked.
-     *
-     * @return the instance of this Singleton class.
+     * non static nested class
      */
-    public static Single getInstance() {
-        return InstanceHolder.INSTANCE;
-    }
+    private final class NestedClass {
 
-    private static final class InstanceHolder {
-        private static final Single INSTANCE = new Single();
+        private NestedClass() {
+            throw new IllegalStateException("No instances!");
+        }
+
+        //some methods
     }
 }
+// end::exampleDemoEnclosing[]
