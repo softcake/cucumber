@@ -116,7 +116,6 @@ apply from: file("gradle/code-quality.gradle")
 allprojects {
     apply plugin: "io.spring.dependency-management"
 
-
     dependencyManagement {
         dependencies {
             dependency "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
@@ -126,8 +125,6 @@ allprojects {
             dependency "com.google.guava:guava:24.0-jre"
         }
     }
-
-
 }
 
 
