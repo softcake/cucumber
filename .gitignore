@@ -20,6 +20,3 @@ gradle-app.setting
 # Misc
 *.log
 
-
-/documentation/content/changelog.md
-/documentation/content/CHANGELOG.md
