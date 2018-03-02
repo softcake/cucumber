@@ -248,7 +248,7 @@ task aggregateJavadocs(type: Javadoc) {
     maxMemory = "1024m"
     destinationDir = new File(buildDir, "docs/javadoc")
     classpath = files(publishedModules.collect { it.sourceSets.main.compileClasspath })
-
+    options.stylesheetFile rootProject.file("config/javadoc/softcake.css")
     options.addStringOption('-module', moduleNames)
 
     options.addStringOption('-module-source-path', "$rootProject.buildDir/docscr/")

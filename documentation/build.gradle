@@ -22,17 +22,11 @@ plugins {
 description = "$rootProject.description documentation"
 javaModule.name = 'org.softcake.cucumber.documentation'
 
-
-
-
-
-
-
 dependencies {
     implementation 'org.softcake.lemon:lemon-core:1.1.0'
     testImplementation 'org.softcake.lemon:lemon-core:1.1.0'
 }
-
+apply plugin: 'org.asciidoctor.convert'
 apply plugin: "se.bjurr.gitchangelog.git-changelog-gradle-plugin"
 
 task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
@@ -45,9 +39,6 @@ task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
     untaggedName = 'Next release'
 }
 
-
-apply plugin: 'org.asciidoctor.convert'
-
 asciidoctorj {
     version = '1.5.4'
 }
@@ -56,7 +47,6 @@ rootProject.afterEvaluate {
     asciidoctor {
         dependsOn tasks.getByName("gitChangelogTask")
         sourceDir "content"
-        //outputDir { project.buildDir }
         sources {
             include 'index.adoc'
         }
