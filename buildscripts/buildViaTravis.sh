@@ -1,7 +1,6 @@
 #!/bin/bash
-# This script will build the project.
 
-set -ev
+set -e
 
 function strongEcho {
   echo ""
