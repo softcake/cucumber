@@ -59,8 +59,6 @@ void setupIDEA(){
 
 }
 
-
-
 void createCopyright() {
     def copyrightFolderPath = "${rootDir}/.idea/copyright"
     def copyrightFolder = new File(copyrightFolderPath)
@@ -132,7 +130,6 @@ void createCopyright() {
         printXml(new XmlParser().parseText(xml), profileSettings)
     }
 }
-
 
 void createCodeStyle() {
     def codeStyleTargetPath = "${rootDir}/.idea/codeStyles"

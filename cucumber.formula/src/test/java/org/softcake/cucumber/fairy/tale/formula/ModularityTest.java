@@ -37,7 +37,7 @@ public class ModularityTest {
     }
 
     @Test
-   @Disabled("Java 9 modularity even stops reflection.")
+    @Disabled("Java 9 modularity even stops reflection.")
     public void canDynamicallyReachDefaultActor() throws Exception {
         Class clazz = ModularityTest
             .class.getClassLoader()
